@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+	<!-- Javascript SDK-->
+  <script src="js/jquery-1.11.1.min.js"></script> 
+  <script src="js/amazon-cognito-auth.min.js"></script>
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script> 
+  <script src="js/amazon-cognito-identity.min.js"></script>
+  <script src="js/climbingApp.js"></script>
+  
+	<style>
+	div.competitionInformation {
+		background-color: lightblue;
+		width: 300px;
+		height: 300px;
+		overflow: scroll;
+	}
+	</style>
+  </head>
+  <body>
+
+	<button id="competitions" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = 'competitions.html';" >Competitions</button><br/>
+	<button id="newCompetition" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = 'competionCreation.html';" >New Competition</button><br/><br/>
+	<h1 class="h3 mb-3 font-weight-normal" id="titleheader">Pro series Comp</h1>
+	
+	<p id="competitionDescription"></p>
+
+	<table id="scoresTable", style="width:100%"></table>
+
+
+	<p id="competitionLocation"></p>
+	<p id="competitionNumberOfProblems"></p>
+	<p id="competitionNumberOfZones"></p>
+	<p id="competitionEndDate"></p>
+
+	<button id="enterScoreButton" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = 'scoreEntering.html';" >Enter Scores<br/></button>
+	<button id="enterCompetitionButton" class="btn btn-lg btn-primary btn-block" type="button" onclick="enterCompetitionButton()" >Enter Competition<br/></button>
+	<button id="leaveCompetitionButton" class="btn btn-lg btn-primary btn-block" type="button" onclick="leaveCompetitionButton()" >Leave Competition<br/></button>
+	<button id="deleteCompetitionButton" class="btn btn-lg btn-primary btn-block" type="button" onclick="deleteCompetitionButton()" >Delete Competition<br/></button>
+
+
+	<script>
+		document.getElementById("enterScoreButton").style.display = "none";
+		document.getElementById("enterCompetitionButton").style.display = "none";
+		document.getElementById("leaveCompetitionButton").style.display = "none";
+		document.getElementById("deleteCompetitionButton").style.display = "none";
+
+		refreshCompetitionInformation(localStorage.selectedCompetitionName);
+
+
+	</script>
+ </body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+	<!-- Javascript SDK-->
+  <script src="js/jquery-1.11.1.min.js"></script> 
+  <script src="js/amazon-cognito-auth.min.js"></script>
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script> 
+  <script src="js/amazon-cognito-identity.min.js"></script>
+  <script src="js/climbingApp.js"></script>
+  
+	<style>
+	div.organisedCompetitions {
+		background-color: lightblue;
+		width: 400px;
+		height: 400px;
+		overflow: scroll;
+	}
+
+	div.enteredCompetitions {
+		background-color: lightblue;
+		width: 400px;
+		height: 400px;
+		overflow: scroll;
+	}
+	</style>
+  </head>
+  <body>
+	<button id="competitions" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = 'competitions.html';" >Competitions</button><br/>
+	<button id="newCompetition" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = 'competionCreation.html';" >New Competition</button><br/><br/>
+
+	<div id="OrderDetails">Search:</div>
+	<input type="text" id="searchTextInput"><br>
+
+
+	<div>Entered Competitions:</div>
+	<div class="enteredCompetitions">
+		<table id="enteredCompetitionsTable", style="width:100%">
+			<tr>
+				<td>Name</td>
+				<td>Location</td>
+				<td>End Date</td>
+				<td>Select</td>
+			</tr>
+		</table>
+	</div>
+
+	<div>Created Competitions:</div>
+	<div class="organisedCompetitions">
+		<table id="organisedCompetitionsTable", style="width:100%">
+			<tr>
+				<td>Name</td>
+				<td>Location</td>
+				<td>End Date</td>
+				<td>Select</td>
+			</tr>
+		</table>
+	</div>
+
+	<script>
+	enteredCompetitionsRefresh();
+	organisedCompetitionsRefresh();
+    $('#searchTextInput').keypress(function(event){
+	
+		var keycode = (event.keyCode ? event.keyCode : event.which);
+		if(keycode == '13'){
+			searchButton();
+		}
+
+	});
+    </script>
+ </body>
+</html>

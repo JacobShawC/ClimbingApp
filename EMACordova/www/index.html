@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+	<!-- Javascript SDK-->
+  <script src="js/jquery-1.11.1.min.js"></script> 
+  <script src="js/amazon-cognito-auth.min.js"></script>
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script> 
+  <script src="js/amazon-cognito-identity.min.js"></script>
+  <script src="js/climbingApp.js"></script>
+  <script src="js/config.js"></script>
+  
+  </head>
+
+	
+  <body>
+
+	<h1 class="h3 mb-3 font-weight-normal" id="titleheader">Climbing Scores WebApp</h1>
+	<img src="img/climbing.png" alt="Climbing App Logo" width="150" height="150"><br/>
+	<input type="email" class="form-control" id="emailInput" placeholder="Email" pattern=".*" required><br/>
+	<input type="password" class="form-control" id="passwordInput" placeholder="Password" pattern=".*" required><br/>
+	<button id="loginButton" class="btn btn-lg btn-primary btn-block" type="button" onclick="loginButton()" >Login</button><br/><br/>
+	<button id="testLoginButton1" class="btn btn-lg btn-primary btn-block" type="button" onclick="testLogin('gezedugegu@coin-mail.com')" >TestLogin1</button><br/><br/>
+	<button id="testLoginButton2" class="btn btn-lg btn-primary btn-block" type="button" onclick="testLogin('jifex@coin-hub.net')" >TestLogin2</button><br/><br/>
+	
+	<input type="text" class="form-control" id="firstNameInput" placeholder="First Name" pattern=".*" required><br/>
+	<input type="text" class="form-control" id="lastNameInput" placeholder="Last Name" pattern=".*" required><br/>
+	<button id="registerButton" class="btn btn-lg btn-primary btn-block" type="button" onclick="registerButton()" >Register</button><br/>
+
+    
+
+	<script>
+	$('#passwordInput').keypress(function(event){
+	var keycode = (event.keyCode ? event.keyCode : event.which);
+	if(keycode == '13'){
+		loginButton();
+	}
+	});
+	$('#lastNameInput').keypress(function(event){
+	var keycode = (event.keyCode ? event.keyCode : event.which);
+	if(keycode == '13'){
+		registerButton();
+	}
+	});
+
+	function testLogin(email)
+	{
+		var emailInput = document.getElementById('emailInput');
+		emailInput.value = email;
+		var passwordInput = document.getElementById('passwordInput');
+		passwordInput.value = "password";
+		loginButton();
+
+	}
+	</script>
+ 
+ </body>
+  
+</html>
