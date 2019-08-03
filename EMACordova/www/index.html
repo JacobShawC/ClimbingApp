@@ -2,31 +2,36 @@
 
 <html lang="en">
   <head>
-    <meta charset="utf-8">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- Javascript SDK-->
-  <script src="js/jquery-1.11.1.min.js"></script> 
+  <script src="js/jquery-3.4.1.min.js"></script> 
   <script src="js/amazon-cognito-auth.min.js"></script>
   <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script> 
   <script src="js/amazon-cognito-identity.min.js"></script>
   <script src="js/climbingApp.js"></script>
   <script src="js/config.js"></script>
-  
+  <script src="js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <script src="js/popper.min.js"></script>
   </head>
 
 	
   <body>
-
-	<h1 class="h3 mb-3 font-weight-normal" id="titleheader">Climbing Scores WebApp</h1>
-	<img src="img/climbing.png" alt="Climbing App Logo" width="150" height="150"><br/>
-	<input type="email" class="form-control" id="emailInput" placeholder="Email" pattern=".*" required><br/>
-	<input type="password" class="form-control" id="passwordInput" placeholder="Password" pattern=".*" required><br/>
-	<button id="loginButton" class="btn btn-lg btn-primary btn-block" type="button" onclick="loginButton()" >Login</button><br/><br/>
-	<button id="testLoginButton1" class="btn btn-lg btn-primary btn-block" type="button" onclick="testLogin('gezedugegu@coin-mail.com')" >TestLogin1</button><br/><br/>
-	<button id="testLoginButton2" class="btn btn-lg btn-primary btn-block" type="button" onclick="testLogin('jifex@coin-hub.net')" >TestLogin2</button><br/><br/>
-	
-	<input type="text" class="form-control" id="firstNameInput" placeholder="First Name" pattern=".*" required><br/>
-	<input type="text" class="form-control" id="lastNameInput" placeholder="Last Name" pattern=".*" required><br/>
-	<button id="registerButton" class="btn btn-lg btn-primary btn-block" type="button" onclick="registerButton()" >Register</button><br/>
+	<div class="container">
+		
+		<h1 class="h3 mb-3 font-weight-normal" id="titleheader">Climbing Scores WebApp</h1>
+		<img src="img/climbing.png" alt="Climbing App Logo" width="150" height="150"><br/>
+		<input type="email" class="form-control" id="emailInput" placeholder="Email" pattern=".*" required><br/>
+		<input type="password" class="form-control" id="passwordInput" placeholder="Password" pattern=".*" required><br/>
+		<button id="loginButton" class="btn btn-lg btn-primary btn-block" type="button" onclick="loginButton()" >Login</button><br/><br/>
+		<button id="testLoginButton1" class="btn btn-lg btn-primary btn-block" type="button" onclick="testLogin('gezedugegu@coin-mail.com')" >TestLogin1</button><br/><br/>
+		<button id="testLoginButton2" class="btn btn-lg btn-primary btn-block" type="button" onclick="testLogin('jifex@coin-hub.net')" >TestLogin2</button><br/><br/>
+		
+		<input type="text" class="form-control" id="firstNameInput" placeholder="First Name" pattern=".*" required><br/>
+		<input type="text" class="form-control" id="lastNameInput" placeholder="Last Name" pattern=".*" required><br/>
+		<button id="registerButton" class="btn btn-lg btn-primary btn-block" type="button" onclick="registerButton()" >Register</button><br/>
+	</div>
 
     
 
