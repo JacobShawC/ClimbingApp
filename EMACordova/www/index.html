@@ -14,23 +14,46 @@
   <script src="js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <script src="js/popper.min.js"></script>
+
+  <style type="text/css">
+	.container{
+		max-width:700px;	
+	}
+
+	</style>
   </head>
 
-	
+  
   <body>
 	<div class="container">
-		
-		<h1 class="h3 mb-3 font-weight-normal" id="titleheader">Climbing Scores WebApp</h1><br/>
-		<img src="img/climbing.png" alt="Climbing App Logo" width="150" height="150">
-		<input type="email" class="form-control" id="emailInput" placeholder="Email" pattern=".*" required>
-		<input type="password" class="form-control" id="passwordInput" placeholder="Password" pattern=".*" required><br/>
-		<button id="loginButton" class="btn btn-lg btn-primary btn-block" type="button" onclick="loginButton()" >Login</button>
-		<button id="testLoginButton1" class="btn btn-lg btn-primary btn-block" type="button" onclick="testLogin('gezedugegu@coin-mail.com')" >TestLogin1</button>
-		<button id="testLoginButton2" class="btn btn-lg btn-primary btn-block" type="button" onclick="testLogin('jifex@coin-hub.net')" >TestLogin2</button><br/>
-		
-		<input type="text" class="form-control" id="firstNameInput" placeholder="First Name" pattern=".*" required>
-		<input type="text" class="form-control" id="lastNameInput" placeholder="Last Name" pattern=".*" required><br/>
-		<button id="registerButton" class="btn btn-lg btn-primary btn-block" type="button" onclick="registerButton()" >Register</button>
+		<h1 class="row justify-content-center" id="titleheader">Climbing Scores WebApp</h1><br/>
+		<img src="img/climbing.png" class="rounded mx-auto d-block" style="width:25%" alt="Climbing App Logo">
+		<form class="form-horizontal">
+			
+			
+			<div class="form-group">
+			<input type="email" class="form-control" id="emailInput" placeholder="Email" pattern=".*" required>
+			</div>
+			<div class="form-group">
+			<input type="password" class="form-control" id="passwordInput" placeholder="Password" pattern=".*" required>
+			</div>
+
+			<div class="form-group">
+			<button id="loginButton" class="btn btn-sm btn-primary btn-block" type="button" onclick="loginButton()">Login</button>
+			</div>
+
+			<div class="form-group">
+			<button id="registerButton" class="btn btn-sm btn-primary btn-block" type="button" onclick="window.location.href = 'register.html'" >Register</button>
+			</div>
+
+			<div class="form-group">
+			<button id="testLoginButton1" class="btn btn-sm btn-primary btn-block" type="button" onclick="testLogin('gezedugegu@coin-mail.com', 'password')" >TestLogin1</button>
+			</div>
+			<div class="form-group">
+			<button id="testLoginButton2" class="btn btn-sm btn-primary btn-block" type="button" onclick="testLogin('jifex@coin-hub.net', 'password')" >TestLogin2</button><br/>
+			</div>
+		</form>
+
 	</div>
 
     
@@ -42,19 +65,13 @@
 		loginButton();
 	}
 	});
-	$('#lastNameInput').keypress(function(event){
-	var keycode = (event.keyCode ? event.keyCode : event.which);
-	if(keycode == '13'){
-		registerButton();
-	}
-	});
 
-	function testLogin(email)
+	function testLogin(email, password)
 	{
 		var emailInput = document.getElementById('emailInput');
 		emailInput.value = email;
 		var passwordInput = document.getElementById('passwordInput');
-		passwordInput.value = "password";
+		passwordInput.value = password;
 		loginButton();
 
 	}

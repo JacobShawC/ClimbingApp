@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Javascript SDK-->
+  <script src="js/jquery-3.4.1.min.js"></script> 
+  <script src="js/amazon-cognito-auth.min.js"></script>
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script> 
+  <script src="js/amazon-cognito-identity.min.js"></script>
+  <!-- <script src="js/climbingApp.js"></script> -->
+  <script src="js/config.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <script src="js/popper.min.js"></script>
+
+  <style type="text/css">
+	.container{
+		max-width:700px;	
+	}
+
+
+	</style>
+  </head>
+
+  
+  <body>
+	<div class="container">
+		<h1 class="row justify-content-center" id="titleheader">Climbing Scores WebApp</h1><br/>
+		<img src="img/climbing.png" class="rounded mx-auto d-block" style="width:25%" alt="Climbing App Logo">
+
+		<form class="needs-validation" novalidate>
+			<div class="form-group">
+				<input type="email" class="form-control" id="emailInput" placeholder="Email" required>
+				<div class="invalid-feedback">Please enter a valid email address.</div>
+			</div>
+			<div class="form-group">
+				<input type="password" class="form-control" id="passwordInput" placeholder="Password" required>
+				<div class="invalid-feedback">Please enter your password to continue.</div>
+			</div>
+			<div class="form-group">
+				<input type="text" class="form-control" id="firstNameInput" placeholder="First Name" required>
+				<div class="invalid-feedback">Please enter your first name to continue.</div>
+			</div>
+			<div class="form-group">
+				<input type="text" class="form-control" id="lastNameInput" placeholder="Last Name" required>
+				<div class="invalid-feedback">Please enter your last name to continue.</div>
+			</div>
+
+			<button type="button" id="registerButton" class="btn btn-primary" onclick="registerPressed()">Register</button>
+			<h1 class="row justify-content-center" id="checkEmail"></h1><br/>
+
+		</form>
+
+		
+	</div>
+
+    
+
+	<script>
+		console.log("test");
+
+		// $('#lastNameInput').keypress(function(event){
+		// var keycode = (event.keyCode ? event.keyCode : event.which);
+		// if(keycode == '13'){
+		// 	registerButton();
+		// }
+		// });#
+		
+			function registerPressed()
+			{
+				var forms = document.getElementsByClassName('needs-validation');
+				// Loop over them and prevent submission
+				var validation = Array.prototype.filter.call(forms, function(form) {
+					if (form.checkValidity() === false) {
+						event.preventDefault();
+						event.stopPropagation();
+					}
+					form.classList.add('was-validated');
+				});
+			}
+
+			console.log("test2");
+
+	// 	(function() {
+    //     'use strict';
+    //     window.addEventListener('load', function() {
+    //         document.getElementById("registerButton").addEventListener("click", function(){
+	// 			//console.log("test");
+	// 			// Fetch all the forms we want to apply custom Bootstrap validation styles to
+	// 			var forms = document.getElementsByClassName('needs-validation');
+	// 			// Loop over them and prevent submission
+	// 			var validation = Array.prototype.filter.call(forms, function(form) {
+	// 				if (form.checkValidity() === false) {
+	// 					event.preventDefault();
+	// 					event.stopPropagation();
+	// 				}
+	// 				form.classList.add('was-validated');
+	// 			});
+
+	// 		});
+	// 	});
+	// });
+	</script>
+ 
+ </body>
+  
+</html>
