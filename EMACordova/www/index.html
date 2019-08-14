@@ -27,49 +27,50 @@
   
   <body>
 	<div class="container">
+
+			<div class="btn-group" role="group" aria-label="Basic example">
+				<button type="button" class="btn btn-secondary">Left</button>
+				<button type="button" class="btn btn-secondary">Middle</button>
+				<button type="button" class="btn btn-secondary">Right</button>
+			</div>
+
+
+
 		<h1 class="row justify-content-center" id="titleheader">Climbing Scores WebApp</h1><br/>
 		<img src="img/climbing.png" class="rounded mx-auto d-block" style="width:25%" alt="Climbing App Logo">
-		<form class="form-horizontal">
-			
-			
+
+		<form class="needs-validation" novalidate>
 			<div class="form-group">
-			<input type="email" class="form-control" id="emailInput" placeholder="Email" pattern=".*" required>
+				<input type="email" class="form-control" id="emailInput" placeholder="Email" required>
+				<div class="invalid-feedback">Please enter a valid email address.</div>
 			</div>
 			<div class="form-group">
-			<input type="password" class="form-control" id="passwordInput" placeholder="Password" pattern=".*" required>
+				<input type="password" class="form-control" id="passwordInput" placeholder="Password" required>
+				<div class="invalid-feedback">Please enter your password to continue.</div>
 			</div>
 
-			<div class="form-group">
 			<button id="loginButton" class="btn btn-sm btn-primary btn-block" type="button" onclick="loginPressed()">Login</button>
-			</div>
 
-			<div class="form-group">
 			<button id="registerButton" class="btn btn-sm btn-primary btn-block" type="button" onclick="window.location.href = 'register.html'" >Register</button>
-			</div>
 
-			<div class="form-group">
 			<button id="testLoginButton1" class="btn btn-sm btn-primary btn-block" type="button" onclick="testLogin('gezedugegu@coin-mail.com', 'password')" >TestLogin1</button>
-			</div>
-			<div class="form-group">
+
 			<button id="testLoginButton2" class="btn btn-sm btn-primary btn-block" type="button" onclick="testLogin('jifex@coin-hub.net', 'password')" >TestLogin2</button><br/>
-			</div>
+
 		</form>
 
 	</div>
-
-    
 
 	<script>
 	$('#passwordInput').keypress(function(event){
 	var keycode = (event.keyCode ? event.keyCode : event.which);
 	if(keycode == '13'){
 		loginButton();
-	}
+	} 
 	});
 
 	function loginPressed() {
 		loginButton();
-
 	}
 
 	function testLogin(email, password)

@@ -1,39 +1,70 @@
 <!DOCTYPE html>
 
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-	<!-- Javascript SDK-->
-  <script src="js/jquery-1.11.1.min.js"></script> 
-  <script src="js/amazon-cognito-auth.min.js"></script>
-  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script> 
-  <script src="js/amazon-cognito-identity.min.js"></script>
-  <script src="js/climbingApp.js"></script>
-  
-	<style>
-	div.organisedCompetitions {
-		background-color: lightblue;
-		width: 400px;
-		height: 400px;
-		overflow: scroll;
-	}
+		<head>
+				<meta charset="utf-8">
+				<meta name="viewport" content="width=device-width, initial-scale=1">
+				<!-- Javascript SDK-->
+				<script src="js/climbingApp.js"></script>
+			
+			  <script src="js/jquery-3.4.1.min.js"></script> 
+			  <script src="js/amazon-cognito-auth.min.js"></script>
+			  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script> 
+			  <script src="js/amazon-cognito-identity.min.js"></script>
+			  <script src="js/config.js"></script>
+			  <script src="js/bootstrap.min.js"></script>
+			  <link rel="stylesheet" href="css/bootstrap.min.css">
+			  <script src="js/popper.min.js"></script>
+			
+			  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+			  rel="stylesheet">
 
-	div.enteredCompetitions {
-		background-color: lightblue;
-		width: 400px;
-		height: 400px;
-		overflow: scroll;
-	}
-	</style>
-  </head>
+			
+			  <style type="text/css">
+				.container{
+					max-width:700px;	
+				}
+
+				div.organisedCompetitions {
+				background-color: lightblue;
+				width: 400px;
+				height: 400px;
+				overflow: scroll;
+				}
+
+				div.enteredCompetitions {
+				background-color: lightblue;
+				width: 400px;
+				height: 400px;
+				overflow: scroll;
+				}
+
+			</style>
+	</head>
+	
   <body>
-	<button id="competitions" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = 'competitions.html';" >Competitions</button><br/>
-	<button id="newCompetition" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = 'competionCreation.html';" >New Competition</button><br/><br/>
+
+		
+
+		
+		<div class="row">
+			<div class="col-sm">
+					<button id="competitions" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = 'competitions.html';" ><i class="material-icons">home</i> Competitions</button>
+				</div>
+			<div class="col-sm">
+					<button id="newCompetition" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = 'searchResults.html';" ><i class="material-icons">search</i> Search</button>
+			</div>
+			<div class="col-sm">
+					<button id="newCompetition" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = 'competionCreation.html';" ><i class="material-icons">add_box</i> New Competition</button>
+				</div>
+			</div>
+
+
 
 	<div id="OrderDetails">Search:</div>
 	<input type="text" id="searchTextInput"><br>
 
-
+	<span class="glyphicon">&#xe003;</span>
 	<div>Entered Competitions:</div>
 	<div class="enteredCompetitions">
 		<table id="enteredCompetitionsTable", style="width:100%">
