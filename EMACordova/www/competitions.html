@@ -21,6 +21,11 @@
 
 			
 			  <style type="text/css">
+
+.btn-group > button {
+    font-size: 2vw;
+}
+
 				.container{
 					max-width:700px;	
 				}
@@ -43,20 +48,21 @@
 	</head>
 	
   <body>
+		<div class="container">
 
-		
+		<div class="btn-group btn-group-justified" role="group">
+				<div class="btn-group" role="group">
+						<button id="competitions" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = 'competitions.html';" ><i class="material-icons">home</i> Competitions</button>
 
-		
-		<div class="row">
-			<div class="col-sm">
-					<button id="competitions" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = 'competitions.html';" ><i class="material-icons">home</i> Competitions</button>
 				</div>
-			<div class="col-sm">
-					<button id="newCompetition" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = 'searchResults.html';" ><i class="material-icons">search</i> Search</button>
-			</div>
-			<div class="col-sm">
-					<button id="newCompetition" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = 'competionCreation.html';" ><i class="material-icons">add_box</i> New Competition</button>
+				<div class="btn-group" role="group">
+						<button id="newCompetition" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = 'searchResults.html';" ><i class="material-icons">search</i> Search</button>
+
 				</div>
+				<div class="btn-group" role="group">
+						<button id="newCompetition" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = 'competionCreation.html';" ><i class="material-icons">add_box</i> New</button>
+
+			  </div>
 			</div>
 
 
@@ -88,6 +94,7 @@
 			</tr>
 		</table>
 	</div>
+</div>
 
 	<script>
 	enteredCompetitionsRefresh();
