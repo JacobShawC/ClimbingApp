@@ -50,20 +50,7 @@
   <body>
 		<div class="container">
 
-		<!-- <div class="btn-group btn-group-justified" role="group">
-				<div class="btn-group" role="group">
-						<button id="competitions" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = 'competitions.html';" ><i class="material-icons">home</i></button>
-
-				</div>
-				<div class="btn-group" role="group">
-						<button id="newCompetition" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = 'searchResults.html';" ><i class="material-icons">search</i></button>
-
-				</div>
-				<div class="btn-group" role="group">
-						<button id="newCompetition" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = 'competionCreation.html';" ><i class="material-icons">add_box</i></button>
-
-			  </div>
-			</div> -->
+	
 
 			<div class="row">
 				<div class="col">
@@ -79,36 +66,59 @@
 		
 				</div>
 			</div>
+			<br>
+			<ul class="nav nav-tabs  nav-fill w-100" role="tablist">
+					<li class="nav-item">
+					  <a class="nav-link active" data-toggle="tab" href="#entered">Entered</a>
+					</li>
+					<li class="nav-item">
+					  <a class="nav-link" data-toggle="tab" href="#created">Created</a>
+					</li>
+				  </ul>
+				
+				  <!-- Tab panes -->
+				  <div class="tab-content">
+					<div id="entered" class="container tab-pane active"><br>
+						<div class="enteredCompetitions">
+							<table id="enteredCompetitionsTable", style="width:100%">
+								<tr>
+									<td>Name</td>
+									<td>Location</td>
+									<td>End Date</td>
+									<td>Select</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<div id="created" class="container tab-pane fade"><br>
+						<div class="organisedCompetitions">
+							<table id="organisedCompetitionsTable", style="width:100%">
+								<tr>
+									<td>Name</td>
+									<td>Location</td>
+									<td>End Date</td>
+									<td>Select</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				  </div>
+				</div>
 
 
 
-	<div id="OrderDetails">Search:</div>
-	<input type="text" id="searchTextInput"><br>
-
-	<span class="glyphicon">&#xe003;</span>
-	<div>Entered Competitions:</div>
-	<div class="enteredCompetitions">
-		<table id="enteredCompetitionsTable", style="width:100%">
-			<tr>
-				<td>Name</td>
-				<td>Location</td>
-				<td>End Date</td>
-				<td>Select</td>
-			</tr>
-		</table>
-	</div>
-
-	<div>Created Competitions:</div>
-	<div class="organisedCompetitions">
-		<table id="organisedCompetitionsTable", style="width:100%">
-			<tr>
-				<td>Name</td>
-				<td>Location</td>
-				<td>End Date</td>
-				<td>Select</td>
-			</tr>
-		</table>
-	</div>
+			<ul class="nav nav-tabs">
+					<li class="nav-item">
+					  <a class="nav-link active" href="#">
+							
+					  </a>
+					</li>
+					<li class="nav-item">
+					  <a class="nav-link" href="#">
+							
+					  </a>
+					</li>
+				  </ul>
 </div>
 
 	<script>
