@@ -4,7 +4,7 @@ var personalName;
 var poolData;
     
 function registerButton() {
-
+    console.log("registerbutton");
     firstName =  document.getElementById("firstNameInput").value;	
     lastName =  document.getElementById("lastNameInput").value;	
     email = document.getElementById("emailInput").value;
@@ -41,18 +41,18 @@ function registerButton() {
     attributeList.push(attributeEmail);
     attributeList.push(attributeGivenName);
     attributeList.push(attributeFamilyName);
-//     userPool.signUp(email, password, attributeList, null, function(err, result){
-//         if (err) {
-//             console.log(JSON.stringify(err));
-//              alert(err.message || JSON.stringify(err));
-//             //return;
-//         }
-//         cognitoUser = result.user;
-//         console.log('user name is ' + cognitoUser.getUsername());
-//         //change elements of page
-//         document.getElementById("checkEmail").innerHTML = "Check your email for a verification link";
+    userPool.signUp(email, password, attributeList, null, function(err, result){
+        if (err) {
+            console.log(JSON.stringify(err));
+             alert(err.message || JSON.stringify(err));
+            //return;
+        }
+        cognitoUser = result.user;
+        console.log('user name is ' + cognitoUser.getUsername());
+        //change elements of page
+        document.getElementById("checkEmail").innerHTML = "Check your email for a verification link";
         
-// });
+});
 }
 
 function loginButton() {

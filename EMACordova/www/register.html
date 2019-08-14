@@ -9,7 +9,7 @@
   <script src="js/amazon-cognito-auth.min.js"></script>
   <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script> 
   <script src="js/amazon-cognito-identity.min.js"></script>
-  <!-- <script src="js/climbingApp.js"></script> -->
+  <script src="js/climbingApp.js"></script>
   <script src="js/config.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -72,13 +72,19 @@
 			{
 				var forms = document.getElementsByClassName('needs-validation');
 				// Loop over them and prevent submission
+				var formValidity = true;
 				var validation = Array.prototype.filter.call(forms, function(form) {
 					if (form.checkValidity() === false) {
+						formValidity = false;
 						event.preventDefault();
 						event.stopPropagation();
 					}
 					form.classList.add('was-validated');
 				});
+				if (formValidity)
+				{
+					registerButton();
+				}
 			}
 
 			console.log("test2");
