@@ -11,6 +11,7 @@
   <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script> 
   <script src="js/amazon-cognito-identity.min.js"></script>
   <script src="js/climbingApp.js"></script>
+  <link rel="import" href="header.html">
 
 	<style>
 		div.searchResults {
@@ -26,9 +27,8 @@
 	</style>
   </head>
   <body>
-	<? php
-		include './header.html';
-	?>
+		<div id="includedContent"></div>
+
 
 
 	<button id="competitions" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = 'competitions.html';" >Competitions</button><br/>
@@ -56,6 +56,15 @@
 	</div>
 	<script>
 
+
+
+var link = document.querySelector('link[rel="import"]');
+
+// Clone the <template> in the import.
+var template = link.import.querySelector('template');
+var clone = document.importNode(template.content, true);
+
+document.querySelector('#container').appendChild(clone);
 
 		$('#searchTextInput').keypress(function(event){
 
