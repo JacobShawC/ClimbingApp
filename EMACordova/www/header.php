@@ -26,9 +26,8 @@
 	</style>
   </head>
   <body>
-	<? php
-	include 'header.html';
-	?>
+		<?php include("header.php"); ?>
+
 
 
 	<button id="competitions" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = 'competitions.html';" >Competitions</button><br/>
