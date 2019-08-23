@@ -48,24 +48,10 @@
 	</head>
 	
   <body>
-		<div class="container">
-
 	
 
-			<div class="row">
-				<div class="col">
-								<button id="competitions" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = 'competitions.html';" ><i class="material-icons">home</i></button>
-		
-					</div>
-				<div class="col">
-								<button id="newCompetition" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = 'searchResults.html';" ><i class="material-icons">search</i></button>
-		
-				</div>
-				<div class="col">
-								<button id="newCompetition" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = 'competionCreation.html';" ><i class="material-icons">add_box</i></button>
-		
-				</div>
-			</div>
+
+		<div class="container">
 			<br>
 			<ul class="nav nav-tabs  nav-fill w-100" role="tablist">
 					<li class="nav-item">
@@ -122,6 +108,8 @@
 </div>
 
 	<script>
+	addHeaderHTML();
+
 	enteredCompetitionsRefresh();
 	organisedCompetitionsRefresh();
     $('#searchTextInput').keypress(function(event){

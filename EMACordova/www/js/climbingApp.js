@@ -3,6 +3,21 @@ var password;
 var personalName;
 var poolData;
     
+function addHeaderHTML() {
+     headerString = '<div class="row"> \
+     <div class="col"> \
+                     <button id="competitions" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = ' + "'competitions.html'" + ';" ><i class="material-icons">home</i></button> \
+    </div> \
+     <div class="col"> \
+                     <button id="newCompetition" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = '+ "'searchResults.html'" +';" ><i class="material-icons">search</i></button> \
+    </div> \
+     <div class="col"> \
+                     <button id="newCompetition" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = ' +"'competionCreation.html'" + ';" ><i class="material-icons">add_box</i></button> \
+ </div> \
+ </div>'
+     $("body").prepend( headerString );
+}
+
 function registerButton() {
     console.log("registerbutton");
     firstName =  document.getElementById("firstNameInput").value;	
