@@ -2,20 +2,56 @@ var username;
 var password;
 var personalName;
 var poolData;
-    
+
+function addStyle() {
+    pendString = '<style type="text/css">\
+    .btn-group > button {\
+        font-size: 2vw;\
+    }\
+        .container{\
+            max-width:700px;\
+        }\
+    div.organisedCompetitions {\
+        background-color: lightblue;\
+        // width: 400px;\
+        height: 400px;\
+        overflow: scroll;\
+    }\
+    div.scrollbar {\
+        background-color: lightblue;\
+        // width: 400px;\
+        height: 400px;\
+        overflow: scroll;\
+    }\
+    </style>'
+    $("head").append( pendString );
+}
+
+function addSources() {
+    pendString = '<script src="js/amazon-cognito-auth.min.js"></script> \
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script> \
+    <script src="js/amazon-cognito-identity.min.js"></script>\
+    <script src="js/config.js"></script>\
+    <script src="js/bootstrap.min.js"></script>\
+    <link rel="stylesheet" href="css/bootstrap.min.css">\
+    <script src="js/popper.min.js"></script>\
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"\
+    rel="stylesheet">'
+    $("head").append( pendString );
+}
 function addHeaderHTML() {
-     headerString = '<div class="row"> \
-     <div class="col"> \
-                     <button id="competitions" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = ' + "'competitions.html'" + ';" ><i class="material-icons">home</i></button> \
+    pendString = '<div class="row"> \
+    <div class="col"> \
+    <button id="competitions" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = ' + "'competitions.html'" + ';" ><i class="material-icons">home</i></button> \
     </div> \
-     <div class="col"> \
-                     <button id="newCompetition" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = '+ "'searchResults.html'" +';" ><i class="material-icons">search</i></button> \
+    <div class="col"> \
+    <button id="newCompetition" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = '+ "'searchResults.html'" +';" ><i class="material-icons">search</i></button> \
     </div> \
-     <div class="col"> \
-                     <button id="newCompetition" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = ' +"'competionCreation.html'" + ';" ><i class="material-icons">add_box</i></button> \
- </div> \
- </div>'
-     $("body").prepend( headerString );
+    <div class="col"> \
+    <button id="newCompetition" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = ' +"'competionCreation.html'" + ';" ><i class="material-icons">add_box</i></button> \
+    </div> \
+    </div>'
+    $($( "#mainContainer" )).prepend( pendString );
 }
 
 function registerButton() {
@@ -24,7 +60,7 @@ function registerButton() {
     lastName =  document.getElementById("lastNameInput").value;	
     email = document.getElementById("emailInput").value;
     password = document.getElementById("passwordInput").value,
-    console.log('Register info: ' + firstName + lastName + email + password);
+    console.log('Register info: ', firstName, lastName, email, password);
 
     poolData = {
             UserPoolId : _config.cognito.userPoolId, // Your user pool id here

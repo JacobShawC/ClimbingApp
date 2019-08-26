@@ -4,11 +4,17 @@
   <head>
     <meta charset="utf-8">
 	<!-- Javascript SDK-->
-  <script src="js/jquery-1.11.1.min.js"></script> 
-  <script src="js/amazon-cognito-auth.min.js"></script>
-  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script> 
-  <script src="js/amazon-cognito-identity.min.js"></script>
-  <script src="js/climbingApp.js"></script>
+	<script src="js/climbingApp.js"></script>
+	<script src="js/jquery-3.4.1.min.js"></script>
+	<script src="js/amazon-cognito-auth.min.js"></script>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
+    <script src="js/amazon-cognito-identity.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/popper.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<script>addStyle()</script>
   
 	<style>
 	div.competitionInformation {
@@ -19,17 +25,19 @@
 	}
 	</style>
   </head>
-  <body>
-	<button id="competitions" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = 'competitions.html';" >Competitions</button><br/>
-	<button id="newCompetition" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = 'competionCreation.html';" >New Competition</button><br/><br/>
+	<body>
+	<div id="mainContainer" class="container">
 
+	</div>
 	<h1 class="h3 mb-3 font-weight-normal" id="titleheader">Input scores:</h1>
 	<table id="scoresTable", style="width:100%"></table>
 	<button id="confirmScoresInput" class="btn btn-lg btn-primary btn-block" type="button" onclick="confirmScores()" >Confirm</button><br/><br/>
 
 
 	<script>
-	refreshScores();
+		addHeaderHTML();
+
+		refreshScores();
 
 	</script>
  </body>
