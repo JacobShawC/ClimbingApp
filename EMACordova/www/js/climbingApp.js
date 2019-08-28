@@ -40,17 +40,36 @@ function addSources() {
     $("head").append( pendString );
 }
 function addHeaderHTML() {
-    pendString = '<div class="row"> \
-    <div class="col"> \
-    <button id="competitions" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = ' + "'competitions.html'" + ';" ><i class="material-icons">home</i></button> \
-    </div> \
-    <div class="col"> \
-    <button id="newCompetition" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = '+ "'searchResults.html'" +';" ><i class="material-icons">search</i></button> \
-    </div> \
-    <div class="col"> \
-    <button id="newCompetition" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = ' +"'competionCreation.html'" + ';" ><i class="material-icons">add_box</i></button> \
-    </div> \
+    // pendString = '<div class="row"> \
+    // <div class="col"> \
+    // <button id="competitions" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = ' + "'competitions.html'" + ';" ><i class="material-icons">home</i></button> \
+    // </div> \
+    // <div class="col"> \
+    // <button id="newCompetition" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = '+ "'searchResults.html'" +';" ><i class="material-icons">search</i></button> \
+    // </div> \
+    // <div class="col">\
+    // <button id="newCompetition" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = ' +"'competionCreation.html'" + ';" ><i class="material-icons">add_box</i></button> \
+    // </div>\
+    // </div>'
+
+    pendString = '<div class="row">\
+        <div class="col">\
+            <button id="competitions" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = ' + "'competitions.html'" + ';" ><i class="material-icons">home</i></button> \
+        </div>\
+        <div class="col">\
+            <button id="newCompetition" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = '+ "'searchResults.html'" +';" ><i class="material-icons">search</i></button> \
+        </div>\
+        <div class="col-1">\
+                <button class="btn btn-primary " type="button" data-toggle="dropdown"><i class="material-icons">menu</i></button>\
+                <span class="caret"></span></button>\
+                <ul class="dropdown-menu dropdown-menu-right">\
+                    <li><a href="#">New Competition</a></li>\
+                    <li><a href="#">Log Out</a></li>\
+                </ul>\
+            </div>\
     </div>'
+
+
     $($( "#mainContainer" )).prepend( pendString );
 }
 
