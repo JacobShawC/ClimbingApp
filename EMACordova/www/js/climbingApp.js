@@ -54,18 +54,17 @@ function addHeaderHTML() {
 
     pendString = '<div class="row">\
         <div class="col">\
-            <button id="competitions" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = ' + "'competitions.html'" + ';" ><i class="material-icons">home</i></button> \
+            <button id="competitions" class="btn btn btn-primary btn-block" type="button" onclick="window.location.href = ' + "'competitions.html'" + ';" ><i class="material-icons">home</i></button> \
         </div>\
         <div class="col">\
-            <button id="newCompetition" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = '+ "'searchResults.html'" +';" ><i class="material-icons">search</i></button> \
+            <button id="newCompetition" class="btn btn btn-primary btn-block" type="button" onclick="window.location.href = '+ "'searchResults.html'" +';" ><i class="material-icons">search</i></button> \
         </div>\
         <div class="col-1">\
                 <button class="btn btn-primary " type="button" data-toggle="dropdown"><i class="material-icons">menu</i></button>\
-                <span class="caret"></span></button>\
-                <ul class="dropdown-menu dropdown-menu-right">\
-                    <li><a href="#">New Competition</a></li>\
-                    <li><a href="#">Log Out</a></li>\
-                </ul>\
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">\
+                    <a class="dropdown-item" href="competitionCreation.html">Create Competition</a>\
+                    <a class="dropdown-item" href="#">Log Out</a>\
+                </div>\
             </div>\
     </div>'
 
