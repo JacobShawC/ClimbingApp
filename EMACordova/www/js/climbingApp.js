@@ -301,15 +301,15 @@ function enteredCompetitionsRefresh() {
 								"April", "May", "June", "July",
 								"August", "September", "October",
 								"November", "December"
-							  ];
+								];
 
-							  var day = date.getDate();
-							  var monthIndex = date.getMonth();
-							  var year = date.getFullYear();
+								var day = date.getDate();
+								var monthIndex = date.getMonth();
+								var year = date.getFullYear();
 
-							  var date = day + ' ' + monthNames[monthIndex] + ' ' + year;
+								var date = day + ' ' + monthNames[monthIndex] + ' ' + year;
 
-                                cell3.innerHTML = String(date);
+								cell3.innerHTML = String(date);
                             }
                         }
             
