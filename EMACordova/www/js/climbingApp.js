@@ -124,9 +124,9 @@ function logoutButton() {
     var cognitoUser = userPool.getCurrentUser();
     if (cognitoUser != null) {
         cognitoUser.signOut();
-        window.location.href = 'index.html';
-
       }
+      window.location.href = 'index.html';
+
 }
 
 function loginButton() {
@@ -259,6 +259,23 @@ function searchButton() {
     });
 }
 
+function getJSDateFromSQL(aDate) {
+    var monthNames = [
+        "January", "February", "March",
+        "April", "May", "June", "July",
+        "August", "September", "October",
+        "November", "December"
+        ];
+
+        var day = aDate.getDate();
+        var monthIndex = aDate.getMonth();
+        var year = aDate.getFullYear();
+
+        var date = day + ' ' + monthNames[monthIndex] + ' ' + year;
+
+    return date;
+}
+
 function enteredCompetitionsRefresh() {
     var enteredCompetitionsTable = document.getElementById("enteredCompetitionsTable");
 
@@ -300,6 +317,10 @@ function enteredCompetitionsRefresh() {
                         {
                             console.log("competitionsList: " + JSON.stringify(data2));
 
+                            data2.sort(function(a, b) {
+                                var dateA = new Date(a.endDate), dateB = new Date(b.endDate);
+                                return dateA - dateB;  
+                            });
                             for (var i = 0; i < data2.length; i++)
                             {
                                 var row = enteredCompetitionsTable.insertRow(i + 1);
@@ -310,25 +331,12 @@ function enteredCompetitionsRefresh() {
                                 var cell3 = row.insertCell(2);
                                 cell1.innerHTML = String(data2[i].competitionName);
                                 cell2.innerHTML = String(data2[i].location);
-								var date = new Date(data2[i].endDate);
-
-								var monthNames = [
-								"January", "February", "March",
-								"April", "May", "June", "July",
-								"August", "September", "October",
-								"November", "December"
-								];
-
-								var day = date.getDate();
-								var monthIndex = date.getMonth();
-								var year = date.getFullYear();
-
-								var date = day + ' ' + monthNames[monthIndex] + ' ' + year;
+                                var date = new Date(data2[i].endDate);
+                                date = getJSDateFromSQL(date);
 
 								cell3.innerHTML = String(date);
                             }
                         }
-            
                     }
                 });
             }
@@ -357,19 +365,28 @@ function organisedCompetitionsRefresh() {
             {
                 console.log("organisedCompetitionsTable competitionsList: " + JSON.stringify(data));
 
+                data.sort(function(a, b) {
+                    var dateA = new Date(a.endDate), dateB = new Date(b.endDate);
+                    return dateA - dateB;  
+                });
+
                 for (var i = 0; i < data.length; i++)
                 {
                     var row = organisedCompetitionsTable.insertRow(i + 1);
+                    row.setAttribute('style', "cursor: pointer;")
 
                     var cell1 = row.insertCell(0);
                     var cell2 = row.insertCell(1);
                     var cell3 = row.insertCell(2);
-                    var cell4 = row.insertCell(3);
+                    //var cell4 = row.insertCell(3);
+
+                    //var date = getJSDateFromSQL(new Date(data2[i].endDate));
+                    var date = new Date(data[i].endDate);
+                    date = getJSDateFromSQL(date);
+
                     cell1.innerHTML = String(data[i].competitionName);
                     cell2.innerHTML = String(data[i].location);
-                    cell3.innerHTML = String(data[i].endDate);
-
-                    cell4.innerHTML =  '<input id="Button" type="button" value="ClickHere" onclick="selectCompetition(\'' + data[i].competitionName + '\')">';
+                    cell3.innerHTML = String(date);
                 }
             }
 
