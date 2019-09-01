@@ -63,7 +63,7 @@ function addHeaderHTML() {
                 <button class="btn btn-primary " type="button" data-toggle="dropdown"><i class="material-icons">menu</i></button>\
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">\
                     <a class="dropdown-item" href="competitionCreation.html">Create Competition</a>\
-                    <a class="dropdown-item" href="#">Log Out</a>\
+                    <a class="dropdown-item" href="javascript:logoutButton()">Log Out</a>\
                 </div>\
             </div>\
     </div>'
@@ -122,6 +122,22 @@ function registerButton() {
         document.getElementById("checkEmail").innerHTML = "Check your email for a verification link";
         
 });
+}
+
+function logoutButton() {
+    var poolData = {
+        UserPoolId : _config.cognito.userPoolId, // Your user pool id here
+        ClientId : _config.cognito.clientId, // Your client id here
+    };
+
+    var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+
+    var cognitoUser = userPool.getCurrentUser();
+    if (cognitoUser != null) {
+        cognitoUser.signOut();
+        window.location.href = 'index.html';
+
+      }
 }
 
 function loginButton() {
