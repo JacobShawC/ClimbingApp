@@ -40,17 +40,6 @@ function addSources() {
     $("head").append( pendString );
 }
 function addHeaderHTML() {
-    // pendString = '<div class="row"> \
-    // <div class="col"> \
-    // <button id="competitions" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = ' + "'competitions.html'" + ';" ><i class="material-icons">home</i></button> \
-    // </div> \
-    // <div class="col"> \
-    // <button id="newCompetition" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = '+ "'searchResults.html'" +';" ><i class="material-icons">search</i></button> \
-    // </div> \
-    // <div class="col">\
-    // <button id="newCompetition" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = ' +"'competionCreation.html'" + ';" ><i class="material-icons">add_box</i></button> \
-    // </div>\
-    // </div>'
 
     pendString = '<div class="row">\
         <div class="col">\
@@ -272,7 +261,6 @@ function searchButton() {
 
 function enteredCompetitionsRefresh() {
     var enteredCompetitionsTable = document.getElementById("enteredCompetitionsTable");
-    var organisedCompetitionsTable = document.getElementById("organisedCompetitionsTable");
 
     console.log(localStorage.myUserName);
 
@@ -315,23 +303,35 @@ function enteredCompetitionsRefresh() {
                             for (var i = 0; i < data2.length; i++)
                             {
                                 var row = enteredCompetitionsTable.insertRow(i + 1);
-            
+								row.setAttribute('onclick', 'selectCompetition(\'' + data2[i].competitionName + '\')');
+								row.setAttribute('style', "cursor: pointer;")
                                 var cell1 = row.insertCell(0);
                                 var cell2 = row.insertCell(1);
                                 var cell3 = row.insertCell(2);
-                                var cell4 = row.insertCell(3);
                                 cell1.innerHTML = String(data2[i].competitionName);
                                 cell2.innerHTML = String(data2[i].location);
-                                cell3.innerHTML = String(data2[i].endDate);
-            
-                                cell4.innerHTML =  '<input id="Button" type="button" value="ClickHere" onclick="selectCompetition(\'' + data2[i].competitionName + '\')">';
+								var date = new Date(data2[i].endDate);
+
+								var monthNames = [
+								"January", "February", "March",
+								"April", "May", "June", "July",
+								"August", "September", "October",
+								"November", "December"
+								];
+
+								var day = date.getDate();
+								var monthIndex = date.getMonth();
+								var year = date.getFullYear();
+
+								var date = day + ' ' + monthNames[monthIndex] + ' ' + year;
+
+								cell3.innerHTML = String(date);
                             }
                         }
             
                     }
                 });
             }
-
         }
     });
 }
@@ -598,41 +598,6 @@ function refreshCompetitionInformation(CompetitionName)
                 cell3.innerHTML =  "Topped";
             }
 
-                // for (var i = 0; i < parsedTries.length; i++) {
-                //     var row = table.insertRow(i + 1);
-                //     var cell1 = row.insertCell(-1);
-                //     var cell2 = row.insertCell(-1);
-                //     //cell1.innerHTML = String("Tries: " + parsedTries[i]);
-
-                //     cell1.innerHTML = String(i + 1);
-
-                //     cell2.innerHTML =  '<input id="Text" type="text" value="' + parsedTries[i] + '">';
-
-
-
-                //     for (var j = 0; j < parsedZones[i].length; j++) {
-                //         var cell = row.insertCell(-1);
-                //         var Checked = "unchecked";
-                //         if (parsedZones[i][j] == 1)
-                //         {
-                //             Checked = "checked";
-                //         }
-                //         cell.innerHTML = '<input type="checkbox" id="scales" name="scales" value="check" ' + Checked + '>';
-                //     }
-
-                //     var cell3 = row.insertCell(-1);
-
-                //     var Checked = "unchecked";
-                //     if (parsedTopped[i] == 1)
-                //     {
-                //         Checked = "checked";
-                //     }
-                //     cell3.innerHTML = '<input type="checkbox" id="scales" name="scales" value="check" ' + Checked + '>';
-
-                // }
-
-
-            //if (JSON.parse(data).length > 0 && JSON.parse(data)[0].scores_username == localStorage.myUserName)
             if (isEntered)
             {
                 console.log("Current user has entered this competition");
