@@ -26,52 +26,50 @@
 	</style>
 	</head>
 	<body>
+		<div id="mainContainer" class="container">
 
-	<div id="mainContainer" class="container">
-		<h1 class="h3 mb-3 font-weight-normal" id="titleheader">Pro series Comp</h1>
+			<h1 class="h3 mb-3 font-weight-normal" id="titleheader">Pro series Comp</h1>
 
-		<p id="competitionDescription"></p>
-	
-		<table id="o9 ", style="width:100%"></table>
-	
-	
-		<p id="competitionLocation"></p>
-		<p id="competitionNumberOfProblems"></p>
-		<p id="competitionNumberOfZones"></p>
-		<p id="competitionEndDate"></p>
+			<p id="competitionDescription"></p>
+		
+			<table id="o9 ", style="width:100%"></table>
+		
+		
+			<p id="competitionLocation"></p>
+			<p id="competitionNumberOfProblems"></p>
+			<p id="competitionNumberOfZones"></p>
+			<p id="competitionEndDate"></p>
 
-		<input type="radio" name="test" value="1" />
-		<input type="radio" name="test" value="2" />
-		<input type="radio" name="test" value="3" />
-		<div class="scrollbar scrollbar-black bordered-black square thin">
-			<div style="border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;">
-				<table id="scoresTable" class="table-sm table-bordered tableFixHead table-hover">
-					<thead>
-						<tr>
-						<th scope="col">Pos</th>
-						<th scope="col">Name</th>
-						<th scope="col">Topped</th>
-						<th scope="col">Score</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
+			<input type="radio" name="test" value="1" />
+			<input type="radio" name="test" value="2" />
+			<input type="radio" name="test" value="3" />
+			<div class="scrollbar scrollbar-black bordered-black square thin">
+					<table  id="enteredCompetitionsTable" class="table-sm table-bordered tableFixHead table-hover">
+						<thead>
+							<tr>
+								<th scope="col">Position</th>
+								<th scope="col">Name</th>
+								<th scope="col">Tops</th>
+								<th scope="col">Tries</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
 
-						</tr>
-					</tbody>
-				</table>
-			</div>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			
+
+		
+			<button id="enterScoreButton" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = 'scoreEntering.html';" >Enter Scores<br/></button>
+			<button id="enterCompetitionButton" class="btn btn-lg btn-primary btn-block" type="button" onclick="enterCompetitionButton()" >Enter Competition<br/></button>
+			<button id="leaveCompetitionButton" class="btn btn-lg btn-primary btn-block" type="button" onclick="leaveCompetitionButton()" >Leave Competition<br/></button>
+			<button id="deleteCompetitionButton" class="btn btn-lg btn-primary btn-block" type="button" onclick="deleteCompetitionButton()" >Delete Competition<br/></button>
+		
+			
 		</div>
-		
-
-	
-		<button id="enterScoreButton" class="btn btn-lg btn-primary btn-block" type="button" onclick="window.location.href = 'scoreEntering.html';" >Enter Scores<br/></button>
-		<button id="enterCompetitionButton" class="btn btn-lg btn-primary btn-block" type="button" onclick="enterCompetitionButton()" >Enter Competition<br/></button>
-		<button id="leaveCompetitionButton" class="btn btn-lg btn-primary btn-block" type="button" onclick="leaveCompetitionButton()" >Leave Competition<br/></button>
-		<button id="deleteCompetitionButton" class="btn btn-lg btn-primary btn-block" type="button" onclick="deleteCompetitionButton()" >Delete Competition<br/></button>
-	
-		
-	</div>
 
 	
 	
