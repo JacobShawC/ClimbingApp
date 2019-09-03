@@ -5,12 +5,33 @@ var poolData;
 
 function addStyle() {
     pendString = '<style type="text/css">\
-    .btn-group > button {\
-        font-size: 2vw;\
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">\
+\
+* {\
+    margin: 0;\
+    padding: 0;\
+  }\
+    // .btn-group > button {\
+    //     font-size: 2vw;\
+    // }\
+\
+    .container{\
+        max-width: 800px;\
+        font-size: "11";\
     }\
-        .container{\
-            max-width:700px;\
-        }\
+    table {\
+        style="border:1px solid #ccc;font: 2vw Georgia, Garamond, Serif;"\
+    }\
+@media screen and (max-width: 800px) {\
+    .container {\
+        max-width: 100%;\
+        font-size: 3vw;\
+  }\
+    table {\
+        style="border:1px solid #ccc;font: 2vw Georgia, Garamond, Serif;"\
+    }\
+}\
+        \
     div.scrollbar {\
         // width: 400px;\
         height: 75vh;\
@@ -39,8 +60,9 @@ function addStyle() {
 \
         /* Just common table stuff. Really. */\
         table  { border-collapse: collapse; width: 100%; }\
-        th, td { padding: 8px 16px; }\
+        //th, td { padding: 8px 16px; }\
         th     { background:#eee; }\
+\
     </style>'
     $("head").append( pendString );
 }
@@ -60,13 +82,13 @@ function addSources() {
 function addHeaderHTML() {
 
     pendString = '<div class="row">\
-        <div class="col">\
+        <div class="col-5">\
             <button id="competitions" class="btn btn btn-primary btn-block" type="button" onclick="window.location.href = ' + "'competitions.html'" + ';" ><i class="material-icons">home</i></button> \
         </div>\
-        <div class="col">\
+        <div class="col-5">\
             <button id="newCompetition" class="btn btn btn-primary btn-block" type="button" onclick="window.location.href = '+ "'searchResults.html'" +';" ><i class="material-icons">search</i></button> \
         </div>\
-        <div class="col-1">\
+        <div class="col-2">\
                 <button class="btn btn-primary " type="button" data-toggle="dropdown"><i class="material-icons">menu</i></button>\
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">\
                     <a class="dropdown-item" href="competitionCreation.html">Create Competition</a>\
@@ -627,7 +649,6 @@ function refreshCompetitionInformation(CompetitionName)
                 cell1.innerHTML =  "Problem";
                 cell2.innerHTML =  "Name";
                 cell3.innerHTML =  "Tries";
-
 
                 for (var i = 0; i < parsedZones[0].length; i++) {
                     var cell = row.insertCell(-1);
