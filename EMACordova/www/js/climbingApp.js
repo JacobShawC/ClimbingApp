@@ -11,18 +11,36 @@ function addStyle() {
         .container{\
             max-width:700px;\
         }\
-    div.organisedCompetitions {\
-        background-color: lightblue;\
-        // width: 400px;\
-        height: 400px;\
-        overflow: scroll;\
-    }\
     div.scrollbar {\
-        background-color: lightblue;\
         // width: 400px;\
-        height: 400px;\
+        height: 75vh;\
         overflow: scroll;\
     }\
+        ::-webkit-scrollbar {\
+        width: 6px;\
+        }\
+\
+        ::-webkit-scrollbar-track {\
+        background: #f1f1f1; \
+        }	\
+        \
+        ::-webkit-scrollbar-thumb {\
+        background: rgb(38, 12, 153); \
+        }\
+        ::-webkit-scrollbar-thumb:hover {\
+        background: rgb(54, 47, 116); \
+        }\
+        .header-fixed {\
+            width: 100% \
+        }\
+\
+        .tableFixHead          { overflow-y: auto; height: 100px; }\
+        .tableFixHead thead th { position: sticky; top: 0; }\
+\
+        /* Just common table stuff. Really. */\
+        table  { border-collapse: collapse; width: 100%; }\
+        th, td { padding: 8px 16px; }\
+        th     { background:#eee; }\
     </style>'
     $("head").append( pendString );
 }
@@ -325,7 +343,8 @@ function enteredCompetitionsRefresh() {
                             {
                                 var row = enteredCompetitionsTable.insertRow(i + 1);
 								row.setAttribute('onclick', 'selectCompetition(\'' + data2[i].competitionName + '\')');
-								row.setAttribute('style', "cursor: pointer;")
+                                row.setAttribute('style', "cursor: pointer;");
+                                //row.setAttribute('scope' = 'row');
                                 var cell1 = row.insertCell(0);
                                 var cell2 = row.insertCell(1);
                                 var cell3 = row.insertCell(2);
@@ -373,6 +392,8 @@ function organisedCompetitionsRefresh() {
                 for (var i = 0; i < data.length; i++)
                 {
                     var row = organisedCompetitionsTable.insertRow(i + 1);
+                    row.setAttribute('onclick', 'selectCompetition(\'' + data[i].competitionName + '\')');
+
                     row.setAttribute('style', "cursor: pointer;")
 
                     var cell1 = row.insertCell(0);
@@ -582,6 +603,8 @@ function refreshCompetitionInformation(CompetitionName)
             var isEntered = false;
             //check if the current user is entered.
             for (var i = 0; i < JSON.parse(data).length; i++) {
+                alert("entered");
+
                 if (JSON.parse(data)[i].scores_username == localStorage.myUserName)
                 {
                     isEntered = true;
