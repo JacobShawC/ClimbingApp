@@ -10,6 +10,12 @@ function addStyle() {
 * {\
     margin: 0;\
     padding: 0;\
+    overflow: hidden;\
+    position:fixed;\
+    overflow: hidden;\
+  }\
+  html, body {\
+    overflow: hidden;\
   }\
     // .btn-group > button {\
     //     font-size: 2vw;\
@@ -82,10 +88,10 @@ function addSources() {
 function addHeaderHTML() {
 
     pendString = '<div class="row">\
-        <div class="col-5">\
+        <div class="col-4">\
             <button id="competitions" class="btn btn btn-primary btn-block" type="button" onclick="window.location.href = ' + "'competitions.html'" + ';" ><i class="material-icons">home</i></button> \
         </div>\
-        <div class="col-5">\
+        <div class="col-4">\
             <button id="newCompetition" class="btn btn btn-primary btn-block" type="button" onclick="window.location.href = '+ "'searchResults.html'" +';" ><i class="material-icons">search</i></button> \
         </div>\
         <div class="col-2">\
