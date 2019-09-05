@@ -242,9 +242,8 @@ function confirmCreateCompetitionButton() {
 
     var urlVar = "https://bljo2x1b0h.execute-api.eu-west-2.amazonaws.com/IncrementOne/competitions?competitionName=" + competitionNameVar 
     + "&competitionDescription=" + competitionDescriptionVar + "&competitionLocation=" + competitionLocationVar + "&competitionNumberOfProblems=" + competitionNumberOfProblemsVar 
-    + "&competitionNumberOfZones=" + competitionNumberOfZonesVar + "&competitionDate=" + competitionDateVar + "&competitionUsername=" + localStorage.myUserName;
+    + "&competitionNumberOfZones=" + competitionNumberOfZonesVar + "&competitionDate=" + competitionDateVar + "&competitionsUsersIDParameter=" + localStorage.myUserName;
     console.log("Data: " + competitionNameVar + ", " + competitionDescriptionVar + ", " + competitionLocationVar + ", " + competitionNumberOfProblemsVar + ", " + competitionNumberOfZonesVar + ", " + competitionDateVar + ", " + localStorage.myUserName)
-
 
 
     $.ajax({
@@ -401,7 +400,7 @@ function organisedCompetitionsRefresh() {
         url: "https://bljo2x1b0h.execute-api.eu-west-2.amazonaws.com/IncrementOne/competitions",
         crossDomain: true,
         data: {
-            "competitionsUsernameParameter": String(localStorage.myUserName),
+            "competitionsUsersIDParameter": String(localStorage.myUserName),
         },
         contentType: "application/json",
         dataType: "json",
