@@ -174,9 +174,8 @@ function logoutButton() {
       window.location.href = 'index.html';
 
 }
-
 function loginButton() {
-    delete localStorage.myUserName;
+    delete localStorage.myUserID;
 	var loginData = {
         Username : document.getElementById("emailInput").value,
         Password : document.getElementById("passwordInput").value,
@@ -201,17 +200,36 @@ function loginButton() {
 	cognitoUser.authenticateUser(authenticationDetails, {
         onSuccess: function (result) {
 			var accessToken = result.getAccessToken().getJwtToken();
-            console.log(accessToken);	
-            
-            localStorage.myUserName = userData.Username;
+            console.log(accessToken);
 
-            window.location.href = 'competitions.html';
+            var urlVar = "https://bljo2x1b0h.execute-api.eu-west-2.amazonaws.com/IncrementOne/users?usersEmailParameter=" + userData.Username;
+            console.log(result);
+
+            $.ajax({
+                type: "GET",
+                url: urlVar,
+                crossDomain: true,
+                dataType: "text",
+
+                contentType: "application/json",
+                success: function(data, status) {
+                    console.log("data: " + data);
+                    console.log("status: " + status);
+
+                    if (data != null && data != undefined)
+                    {
+                        console.log("My id: " + JSON.parse(data)[0].id);
+                        localStorage.myUserID = JSON.parse(data)[0].id;
+                        window.location.href = 'competitions.html';
+                    }
+                }
+            });
+
         },
 
         onFailure: function(err) {
             alert(err.message || JSON.stringify(err));
         },
-        
     });
 }
 
@@ -224,26 +242,34 @@ function confirmCreateCompetitionButton() {
     var competitionDescriptionVar =  document.getElementById("competitionDescriptionInput").value;	
     var competitionLocationVar =  document.getElementById("competitionLocationInput").value;	
     var competitionNumberOfProblemsVar = document.getElementById("competitionNumberOfProblemsInput").value;
-    var competitionNumberOfZonesVar = document.getElementById("competitionNumberOfZonesInput").value;
+    var competitionHasZones = false;
+    competitionHasZones = document.getElementById("competitionHasZones").checked;
     var competitionDateVar = document.getElementById("competitionDateInput").value;
-
     var competitionInfo = new Array();
     competitionInfo.push(competitionNameVar);
     competitionInfo.push(competitionDescriptionVar);
     competitionInfo.push(competitionNumberOfProblemsVar);
-    competitionInfo.push(competitionNumberOfZonesVar);
+    competitionInfo.push(competitionHasZones);
     competitionInfo.push(competitionDateVar);
-
-    if (competitionNameVar.length == 0 || competitionDescriptionVar.length == 0 || competitionLocationVar.length == 0 || competitionNumberOfProblemsVar.length == 0 || competitionNumberOfZonesVar.length == 0 || competitionDateVar.length == 0)
+    var currentDate = new Date();
+    var compDate = new Date(competitionDateVar);
+    currentDate.setHours(0,0,0,0);
+    console.log(competitionDateVar + " " + compDate + " " + currentDate);
+    if (currentDate > compDate)
+    {
+        alert("Please enter a future date");
+        return;
+    }
+    if (competitionNameVar.length == 0 || competitionDescriptionVar.length == 0 || competitionLocationVar.length == 0 || competitionNumberOfProblemsVar.length == 0 || compDate == 'Invalid Date')
     {
         alert("Please fill in all of the data.");
         return;
     }
-
+    
     var urlVar = "https://bljo2x1b0h.execute-api.eu-west-2.amazonaws.com/IncrementOne/competitions?competitionName=" + competitionNameVar 
     + "&competitionDescription=" + competitionDescriptionVar + "&competitionLocation=" + competitionLocationVar + "&competitionNumberOfProblems=" + competitionNumberOfProblemsVar 
-    + "&competitionNumberOfZones=" + competitionNumberOfZonesVar + "&competitionDate=" + competitionDateVar + "&competitionsUsersIDParameter=" + localStorage.myUserName;
-    console.log("Data: " + competitionNameVar + ", " + competitionDescriptionVar + ", " + competitionLocationVar + ", " + competitionNumberOfProblemsVar + ", " + competitionNumberOfZonesVar + ", " + competitionDateVar + ", " + localStorage.myUserName)
+    + "&competitionHasZones=" + competitionHasZones + "&competitionDate=" + competitionDateVar + "&competitionsUsersIDParameter=" + localStorage.myUserID;
+    console.log("Data: " + competitionNameVar + ", " + competitionDescriptionVar + ", " + competitionLocationVar + ", " + competitionNumberOfProblemsVar + ", " + competitionHasZones + ", " + competitionDateVar + ", " + localStorage.myUserID)
 
 
     $.ajax({
@@ -262,7 +288,10 @@ function confirmCreateCompetitionButton() {
             {
                 window.location.href = 'competitions.html';
             }
-        }
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(errorThrown);
+            }
     });
 }
 
@@ -324,14 +353,14 @@ function getJSDateFromSQL(aDate) {
 function enteredCompetitionsRefresh() {
     var enteredCompetitionsTable = document.getElementById("enteredCompetitionsTable");
 
-    console.log(localStorage.myUserName);
+    console.log("localStorage.myUserID: " + localStorage.myUserID);
 
     $.ajax({
         type: "GET",
         url: "https://bljo2x1b0h.execute-api.eu-west-2.amazonaws.com/IncrementOne/scores",
         crossDomain: true,
         data: {
-            "scoresUsernameParameter": String(localStorage.myUserName),
+            "usersIDParameter": String(localStorage.myUserID),
         },
         contentType: "application/json",
         dataType: "json",
@@ -393,19 +422,20 @@ function enteredCompetitionsRefresh() {
 function organisedCompetitionsRefresh() {
     var organisedCompetitionsTable = document.getElementById("organisedCompetitionsTable");
 
-    console.log(localStorage.myUserName);
+    console.log(localStorage.myUserID);
 
     $.ajax({
         type: "GET",
         url: "https://bljo2x1b0h.execute-api.eu-west-2.amazonaws.com/IncrementOne/competitions",
         crossDomain: true,
         data: {
-            "competitionsUsersIDParameter": String(localStorage.myUserName),
+            "competitionsUsersIDParameter": String(localStorage.myUserID),
         },
         contentType: "application/json",
         dataType: "json",
         success: function(data, status) {
             console.log(status);
+            console.log(data, "All competitions: " + JSON.stringify(data));
 
             if (data != null && data != undefined)
             {
@@ -492,7 +522,7 @@ function refreshScores()
 {
 
     var urlVar = "https://bljo2x1b0h.execute-api.eu-west-2.amazonaws.com/IncrementOne/scores?scoresCompParameter=" + localStorage.selectedCompetitionName 
-    + "&scoresUsernameParameter=" + localStorage.myUserName;
+    + "&usersIDParameter=" + localStorage.myUserID;
 
     
 
@@ -596,7 +626,7 @@ function confirmScores()
     }
     console.log(" Tries: " + Tries + " Zones: " + JSON.stringify(Zones) + " Topped: " + Topped);
 
-    updateScore(localStorage.selectedCompetitionName, localStorage.myUserName, Tries, Zones, Topped);
+    updateScore(localStorage.selectedCompetitionName, localStorage.myUserID, Tries, Zones, Topped);
 
 }
 
@@ -609,7 +639,7 @@ function refreshCompetitionInformation(CompetitionName)
     var competitionDescription = document.getElementById("competitionDescription");
     var competitionLocation = document.getElementById("competitionLocation");
     var competitionNumberOfProblems = document.getElementById("competitionNumberOfProblems");
-    var competitionNumberOfZones = document.getElementById("competitionNumberOfZones");
+    var competitionHasZones = document.getElementById("competitionHasZones");
     var competitionEndDate = document.getElementById("competitionEndDate");
 
     
@@ -632,7 +662,7 @@ function refreshCompetitionInformation(CompetitionName)
             for (var i = 0; i < JSON.parse(data).length; i++) {
                 alert("entered");
 
-                if (JSON.parse(data)[i].scores_username == localStorage.myUserName)
+                if (JSON.parse(data)[i].scores_userID == localStorage.myUserID)
                 {
                     isEntered = true;
                 }
@@ -702,7 +732,7 @@ function refreshCompetitionInformation(CompetitionName)
         success: function(data, status) {
             console.log("competitions data: " + data);
 
-            if (data[0].competitionUsername == localStorage.myUserName)
+            if (data[0].userID == localStorage.myUserID)
             {
                 console.log("Comp was created by the current user.");
                 document.getElementById("deleteCompetitionButton").style.display = "block";
@@ -716,7 +746,7 @@ function refreshCompetitionInformation(CompetitionName)
 
             if (!(data === undefined || data.length == 0))
             {
-                console.log("Get Competitions: " + data[0].competitionUsername == localStorage.myUserName);
+                console.log("Get Competitions: " + data[0].userID == localStorage.myUserID);
 
                 if (data === undefined)
                 {                
@@ -757,8 +787,8 @@ function refreshCompetitionInformation(CompetitionName)
 }
 
 function leaveCompetitionButton() {
-    console.log("leaveCompetitionButton2: " + localStorage.myUserName + ", " + localStorage.selectedCompetitionName);
-    var urlVar = "https://bljo2x1b0h.execute-api.eu-west-2.amazonaws.com/IncrementOne/scores?scoresUsernameParameter=" + localStorage.myUserName 
+    console.log("leaveCompetitionButton2: " + localStorage.myUserID + ", " + localStorage.selectedCompetitionName);
+    var urlVar = "https://bljo2x1b0h.execute-api.eu-west-2.amazonaws.com/IncrementOne/scores?usersIDParameter=" + localStorage.myUserID 
     + "&scoresCompParameter=" + localStorage.selectedCompetitionName;
 
     $.ajax({
@@ -834,16 +864,16 @@ function enterCompetitionButton() {
     }
 
 
-    updateScore(currentCompInfo.competitionName, localStorage.myUserName, problemsTries, problemsZones, problemsTopped);
+    updateScore(currentCompInfo.competitionName, localStorage.myUserID, problemsTries, problemsZones, problemsTopped);
 
 }
 
 
 
-function updateScore(scores_competitionName, scores_username, problemsTries, problemsZones, problemsTopped)
+function updateScore(scores_competitionName, usersIDParameter, problemsTries, problemsZones, problemsTopped)
 {
     var urlVar = "https://bljo2x1b0h.execute-api.eu-west-2.amazonaws.com/IncrementOne/scores?scores_competitionName=" + scores_competitionName 
-    + "&scores_username=" + scores_username + "&problemsTries=" + JSON.stringify(problemsTries) + "&problemsZones=" + JSON.stringify(problemsZones)
+    + "&usersIDParameter=" + usersIDParameter + "&problemsTries=" + JSON.stringify(problemsTries) + "&problemsZones=" + JSON.stringify(problemsZones)
     + "&problemsTopped=" + JSON.stringify(problemsTopped);
 
     $.ajax({
@@ -866,5 +896,5 @@ function updateScore(scores_competitionName, scores_username, problemsTries, pro
         }
     });
 
-    console.log("updateScore: ", scores_competitionName + " . " + scores_username + " . " + problemsTries + " . " + problemsZones + " . " + problemsTopped);
+    console.log("updateScore: ", scores_competitionName + " . " + usersIDParameter + " . " + problemsTries + " . " + problemsZones + " . " + problemsTopped);
 }
