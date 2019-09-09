@@ -665,10 +665,14 @@ function refreshCompetitionInformation(CompetitionName)
                 var Information = JSON.parse(localStorage.CompetitionInformation);
                 console.log(Information.description);
 
-                Header.innerHTML = "Name: " + compData[0].competitionName;
+                Header.innerHTML = compData[0].competitionName;
                 competitionDescription.innerHTML = "Description: " + String(compData[0].description);
                 competitionLocation.innerHTML = "Location: " + compData[0].location;
-                competitionEndDate.innerHTML = "End Date: " + Date(compData[0].endDate);
+
+                var date = new Date(compData[0].endDate);
+                date = getJSDateFromSQL(date);
+                competitionEndDate.innerHTML = "End Date: " + date;
+
             }
             else{
                 document.getElementById("enterCompetitionButton").style.display = "none";
