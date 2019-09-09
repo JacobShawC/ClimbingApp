@@ -94,7 +94,7 @@ function addHeaderHTML() {
         <div class="col-4">\
             <button id="newCompetition" class="btn btn btn-primary btn-block" type="button" onclick="window.location.href = '+ "'searchResults.html'" +';" ><i class="material-icons">search</i></button> \
         </div>\
-        <div class="col-2">\
+        <div class="col-1">\
                 <button class="btn btn-primary " type="button" data-toggle="dropdown"><i class="material-icons">menu</i></button>\
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">\
                     <a class="dropdown-item" href="competitionCreation.html">Create Competition</a>\
@@ -271,6 +271,7 @@ function confirmCreateCompetitionButton() {
     + "&competitionHasZones=" + competitionHasZones + "&competitionDate=" + competitionDateVar + "&competitionsUsersIDParameter=" + localStorage.myUserID;
     console.log("Data: " + competitionNameVar + ", " + competitionDescriptionVar + ", " + competitionLocationVar + ", " + competitionNumberOfProblemsVar + ", " + competitionHasZones + ", " + competitionDateVar + ", " + localStorage.myUserID)
 
+	console.log("urlVAR: " + urlVar);
 
     $.ajax({
         type: "PUT",
@@ -286,7 +287,7 @@ function confirmCreateCompetitionButton() {
 
             if (data != null && data != undefined)
             {
-                window.location.href = 'competitions.html';
+                window.location.href = 'competitions.html#created';
             }
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -520,111 +521,116 @@ function selectCompetition(competitionName)
 
 function refreshScores()
 {
-
-    var urlVar = "https://bljo2x1b0h.execute-api.eu-west-2.amazonaws.com/IncrementOne/scores?scoresCompParameter=" + localStorage.selectedCompetitionName 
-    + "&usersIDParameter=" + localStorage.myUserID;
-
-    
+    var table = document.getElementById("scoresTable");
 
     $.ajax({
         type: "GET",
-        url: urlVar,
+        url: "https://bljo2x1b0h.execute-api.eu-west-2.amazonaws.com/IncrementOne/competitions",
         crossDomain: true,
-        dataType: "text",
-
+        data: {
+            "competitionsNameParameter": String(localStorage.selectedCompetitionName),
+        },
         contentType: "application/json",
-        success: function(data, status) {
-            console.log("data: " + data);
-            console.log(status);
-
-            if (data != null && data != undefined)
-            {
-                var table = document.getElementById("scoresTable");
-
-                var parsedData = JSON.parse(data)[0];
-                var parsedTopped = JSON.parse(parsedData.problemsTopped);
-                var parsedZones = JSON.parse(parsedData.problemsZones);
-                var parsedTries = JSON.parse(parsedData.problemsTries);
-                
-                var row = table.insertRow(i);
-                var cell1 = row.insertCell(-1);
-                var cell2 = row.insertCell(-1);
-                cell1.innerHTML =  "Problem";
-                cell2.innerHTML =  "Tries";
-
-
-                for (var i = 0; i < parsedZones[0].length; i++) {
-                    var cell = row.insertCell(-1);
-                    cell.innerHTML =  "Zone " + (i + 1);
-
-                }
-                var cell3 = row.insertCell(-1);
-                cell3.innerHTML =  "Topped";
-
-                for (var i = 0; i < parsedTries.length; i++) {
-                    var row = table.insertRow(i + 1);
-                    var cell1 = row.insertCell(-1);
-                    var cell2 = row.insertCell(-1);
-                    //cell1.innerHTML = String("Tries: " + parsedTries[i]);
-
-                    cell1.innerHTML = String(i + 1);
-
-                    cell2.innerHTML =  '<input id="Text" type="text" value="' + parsedTries[i] + '">';
-
-
-
-                    for (var j = 0; j < parsedZones[i].length; j++) {
-                        var cell = row.insertCell(-1);
-                        var Checked = "unchecked";
-                        if (parsedZones[i][j] == 1)
-                        {
-                            Checked = "checked";
-                        }
-                        cell.innerHTML = '<input type="checkbox" id="scales" name="scales" value="check" ' + Checked + '>';
-                    }
-
-                    var cell3 = row.insertCell(-1);
-
-                    var Checked = "unchecked";
-                    if (parsedTopped[i] == 1)
+        dataType: "json",
+        success: function(compData, status) {
+            var urlVar = "https://bljo2x1b0h.execute-api.eu-west-2.amazonaws.com/IncrementOne/scores?scoresCompParameter=" + localStorage.selectedCompetitionName 
+            + "&usersIDParameter=" + localStorage.myUserID;
+        
+            console.log("urlVar: " + urlVar);
+            $.ajax({
+                type: "GET",
+                url: urlVar,
+                crossDomain: true,
+                dataType: "text",
+                success: function(scoresData, status) {
+                var parsedScoresData = JSON.parse(scoresData);
+                console.log("compData: " + JSON.stringify(compData));
+                console.log("scoresData: " + scoresData);
+                var parsedTopped = JSON.parse(parsedScoresData[0].problemsTopped);
+                var parsedZones = JSON.parse(parsedScoresData[0].problemsZones);
+                var parsedTries = JSON.parse(parsedScoresData[0].problemsTries);
+                    if (compData[0].hasZones == 0)
                     {
-                        Checked = "checked";
+                        table.tHead.rows[0].cells[2].remove();
                     }
-                    cell3.innerHTML = '<input type="checkbox" id="scales" name="scales" value="check" ' + Checked + '>';
+                    for (var i = 0; i < compData[0].numberOfProblems; i++)
+                    {
+                        var row = table.insertRow(-1);
+                        var cell1 = row.insertCell(-1);
+                        cell1.innerHTML = i + 1;
 
+                        var cell2 = row.insertCell(-1);
+                        cell2.innerHTML =  '<input id="triesInput" type="number" value="' + parsedTries[i] + '">';
+
+                        if (compData[0].hasZones == 1)
+                        {
+                            var cell3 = row.insertCell(-1);
+                            var Checked = "unchecked";
+                            if (parsedZones[i] > 0) {
+                                Checked = "checked";
+                            }
+                            cell3.innerHTML = '<input type="checkbox" id="scales" name="scales" value="check" ' + Checked + '>';
+                        }
+
+                        var cell4 = row.insertCell(-1);
+                            var Checked = "unchecked";
+                            if (parsedTopped[i] > 0) {
+                                Checked = "checked";
+                            }
+                            cell4.innerHTML = '<input type="checkbox" id="scales" name="scales" value="check" ' + Checked + '>';
+
+                    }
+                    
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                    console.log("Error");
+                    document.getElementById("enterCompetitionButton").style.display = "none";
+                    
                 }
-            }
+            });
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) { 
+            console.log("Error");
+            document.getElementById("enterCompetitionButton").style.display = "none";
+            
         }
     });
-
-   
 }
 
 function confirmScores()
 {
-    
-    var rows = document.getElementById('scoresTable').rows;
-    var rowCount = rows.length;
+    var enteredCompetitionsTable = document.getElementById("scoresTable");
+
+    var rows = enteredCompetitionsTable.rows;
     var columnCount = document.getElementById('scoresTable').rows[0].cells.length;
     var Tries = [];
     var Zones = [];
     var Topped = [];
-    for (var i = 1; i < rowCount; i++)
+    for (var i = 2; i < rows.length; i++)
     {
-        Tries.push(rows[i].cells[1].children[0].value);
-
-        var Zones2d = [];
-        for (var j = 0; j < (columnCount - 3); j++)
+        console.log(rows[i]);
+        var hasTopped = rows[i].cells[columnCount -1].children[0].checked*1;
+        var hasZone = rows[i].cells[columnCount -2].children[0].checked*1;
+        Topped.push(hasTopped);
+        if (columnCount > 3)
         {
-            //Zones2d.push(rows[i].cells[j + 2]);
-            Zones2d.push(rows[i].cells[j + 2].children[0].checked*1);
+            if (hasTopped)
+            {
+                Zones.push(1);
+            }
+            else{
+                Zones.push(parseInt(rows[i].cells[columnCount -2].children[0].checked*1));
+            }
+            if (parseInt(rows[i].cells[1].children[0].value) == 0 && (hasTopped || hasZone)) {
+                Tries.push(1);
+            }
+            else{
+                Tries.push(parseInt(rows[i].cells[1].children[0].value));
+            }
+
         }
-        Zones[i - 1] = Zones2d;
-
-        Topped.push(rows[i].cells[columnCount -1].children[0].checked*1);
-
     }
-    console.log(" Tries: " + Tries + " Zones: " + JSON.stringify(Zones) + " Topped: " + Topped);
+    console.log(" Tries: " + Tries + " Zones: " + Zones + " Topped: " + Topped);
 
     updateScore(localStorage.selectedCompetitionName, localStorage.myUserID, Tries, Zones, Topped);
 
@@ -632,94 +638,16 @@ function confirmScores()
 
 function refreshCompetitionInformation(CompetitionName)
 {
+    var table = document.getElementById("competitionInformationTable");
 
     console.log("refreshCompetitionInformation CompetitionName: " + CompetitionName);
 
     var Header = document.getElementById("titleheader");
     var competitionDescription = document.getElementById("competitionDescription");
     var competitionLocation = document.getElementById("competitionLocation");
-    var competitionNumberOfProblems = document.getElementById("competitionNumberOfProblems");
-    var competitionHasZones = document.getElementById("competitionHasZones");
     var competitionEndDate = document.getElementById("competitionEndDate");
 
-    
-
-    var urlVar2 = "https://bljo2x1b0h.execute-api.eu-west-2.amazonaws.com/IncrementOne/scores?scoresCompParameter=" + localStorage.selectedCompetitionName;
-    //this is to get whether the user is currently entered in this competition.
-    $.ajax({
-        type: "GET",
-        url: urlVar2,
-        crossDomain: true,
-        dataType: "text",
-
-        contentType: "application/json",
-        success: function(data, status) {
-            console.log("scores data: " + data);
-            //if (data[0] != null && data[0] != undefined && data.length > 0)
-            
-            var isEntered = false;
-            //check if the current user is entered.
-            for (var i = 0; i < JSON.parse(data).length; i++) {
-                alert("entered");
-
-                if (JSON.parse(data)[i].scores_userID == localStorage.myUserID)
-                {
-                    isEntered = true;
-                }
-            }
-            if (data != null && data != undefined && JSON.parse(data).length > 0)
-            {
-                var table = document.getElementById("scoresTable");
-
-                var parsedData = JSON.parse(data)[0];
-                console.log("parsedData: " + parsedData + ", " + localStorage.selectedCompetitionName + ", " + status + ", " + isEntered)
-                var parsedTopped = JSON.parse(parsedData.problemsTopped);
-                var parsedZones = JSON.parse(parsedData.problemsZones);
-                var parsedTries = JSON.parse(parsedData.problemsTries);
-                
-                var row = table.insertRow(-1);
-                var cell1 = row.insertCell(-1);
-                var cell2 = row.insertCell(-1);
-                var cell3 = row.insertCell(-1);
-                cell1.innerHTML =  "Problem";
-                cell2.innerHTML =  "Name";
-                cell3.innerHTML =  "Tries";
-
-                for (var i = 0; i < parsedZones[0].length; i++) {
-                    var cell = row.insertCell(-1);
-                    cell.innerHTML =  "Zone " + (i + 1);
-
-                }
-                var cell3 = row.insertCell(-1);
-                cell3.innerHTML =  "Topped";
-            }
-
-            if (isEntered)
-            {
-                console.log("Current user has entered this competition");
-                document.getElementById("enterCompetitionButton").style.display = "none";
-                document.getElementById("leaveCompetitionButton").style.display = "block";
-                document.getElementById("enterScoreButton").style.display = "block";
-
-            }
-            else{
-                console.log("Current user has NOT entered this competition");
-
-                document.getElementById("enterCompetitionButton").style.display = "block";
-                document.getElementById("leaveCompetitionButton").style.display = "none";
-                document.getElementById("enterScoreButton").style.display = "none";
-
-            }
-            
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) { 
-            document.getElementById("leaveCompetitionButton").style.display = "none";
-                console.log("error none: " + errorThrown);
-        }
-    });
-
-
-
+    //First we get the competition data for this competition to work out of the logged in user created the competition and other information such as name and description 
     $.ajax({
         type: "GET",
         url: "https://bljo2x1b0h.execute-api.eu-west-2.amazonaws.com/IncrementOne/competitions",
@@ -729,10 +657,10 @@ function refreshCompetitionInformation(CompetitionName)
         },
         contentType: "application/json",
         dataType: "json",
-        success: function(data, status) {
-            console.log("competitions data: " + data);
+        success: function(compData, status) {
+            console.log("competitions data: " + JSON.stringify(compData));
 
-            if (data[0].userID == localStorage.myUserID)
+            if (compData[0].userID == localStorage.myUserID)
             {
                 console.log("Comp was created by the current user.");
                 document.getElementById("deleteCompetitionButton").style.display = "block";
@@ -744,36 +672,196 @@ function refreshCompetitionInformation(CompetitionName)
 
 
 
-            if (!(data === undefined || data.length == 0))
+            if (!(compData === undefined || compData.length == 0))
             {
-                console.log("Get Competitions: " + data[0].userID == localStorage.myUserID);
+                console.log("Get Competitions: " + compData[0].userID == localStorage.myUserID);
 
-                if (data === undefined)
+                if (compData === undefined)
                 {                
                     document.getElementById("enterCompetitionButton").style.display = "none";
-
                     return;
                 }
-                localStorage.CompetitionInformation = JSON.stringify(data[0]);
+                localStorage.CompetitionInformation = JSON.stringify(compData[0]);
                 //console.log(JSON.parse(localStorage.CompetitionInformation));
 
                 var Information = JSON.parse(localStorage.CompetitionInformation);
                 console.log(Information.description);
 
-                Header.innerHTML = "Name: " + data[0].competitionName;
-                competitionDescription.innerHTML = "Description: " + String(data[0].description);
-                competitionLocation.innerHTML = "Location: " + data[0].location;
-                competitionNumberOfProblems.innerHTML = "Problems: " + data[0].numberOfProblems;
-                competitionNumberOfZones.innerHTML = "Zones: " + data[0].numberOfZones;
-                competitionEndDate.innerHTML = "End Date: " + data[0].endDate;
-
-                
+                Header.innerHTML = "Name: " + compData[0].competitionName;
+                competitionDescription.innerHTML = "Description: " + String(compData[0].description);
+                competitionLocation.innerHTML = "Location: " + compData[0].location;
+                competitionEndDate.innerHTML = "End Date: " + Date(compData[0].endDate);
             }
             else{
-                console.log("elseelseelseelseelse");
                 document.getElementById("enterCompetitionButton").style.display = "none";
-
             }
+            if (compData[0].hasZones == false) {
+                table.tHead.rows[0].cells[3].remove();
+            }
+            if (table.rows.length > 1) {
+                table.rows[1].remove();
+            }
+
+            //Then we get the score information for the compeititon in order find out if the user is entered and to show out each users' scores.
+
+
+
+            var urlVar2 = "https://bljo2x1b0h.execute-api.eu-west-2.amazonaws.com/IncrementOne/scores";
+
+            console.log("urlVar2: " + urlVar2);
+            $.ajax({
+                type: "GET",
+                url: urlVar2,
+                crossDomain: true,
+                dataType: "text",
+                data: {
+                    "scoresCompParameter": String(localStorage.selectedCompetitionName),
+                },
+                contentType: "application/json",
+                success: function(scoresData, status) {
+                    //get all the ID who are entered in the competition
+                    var parsedScoresData = JSON.parse(scoresData);
+
+                    console.log("scores scoresData: " + parsedScoresData.length + scoresData);
+                    var IDArray = new Array();
+                    for (var i = 0; i < parsedScoresData.length; i++) {
+                        IDArray.push(parsedScoresData[i].scores_userID);
+                    }
+                    console.log("IDArray: " + IDArray.toString());
+
+                    var urlVar3 = "https://bljo2x1b0h.execute-api.eu-west-2.amazonaws.com/IncrementOne/users?usersIDParameter=" + JSON.stringify(IDArray);
+
+                    //Here we are getting the competitors full names from the ID on each score.
+                    console.log("urlVar3: " + urlVar3);
+                    $.ajax({
+                        type: "GET",
+                        url: urlVar3,
+                        crossDomain: true,
+                        dataType: "text",
+
+                        contentType: "application/json",
+                        success: function(usersData, status) {
+                            console.log("usersData: " + usersData);
+
+                            
+                            var parsedUsersData = JSON.parse(usersData);
+                            console.log("scoresData: " + scoresData);
+                            console.log("usersData: " + usersData);
+
+                            var isEntered = false;
+                            //check if the current user is entered.
+                            for (var i = 0; i < parsedScoresData.length; i++) {
+                                console.log("parsedScoresData[i].scores_userID + localStorage.myUserID: "+ parsedScoresData[i].scores_userID + ", " + localStorage.myUserID);
+                                if (parsedScoresData[i].scores_userID == localStorage.myUserID)
+                                {
+                                    isEntered = true;
+                                }
+                            }
+
+                            if (isEntered)
+                            {
+                                console.log("Current user has entered this competition");
+                                document.getElementById("enterCompetitionButton").style.display = "none";
+                                document.getElementById("leaveCompetitionButton").style.display = "block";
+                                document.getElementById("enterScoreButton").style.display = "block";
+
+                            }
+                            else{
+                                
+
+                                document.getElementById("enterCompetitionButton").style.display = "block";
+                                document.getElementById("leaveCompetitionButton").style.display = "none";
+                                document.getElementById("enterScoreButton").style.display = "none";
+
+                            }
+
+                            for (var i = 0; i < parsedUsersData.length; i++) {
+                                var tries = 0;
+                                var zones = 0;
+                                var tops = 0;
+                                var score = 0;
+                                for (var j = 0; j < JSON.parse(parsedScoresData[i].problemsTries).length; j++) {
+                                    tries += JSON.parse(parsedScoresData[i].problemsTries)[j];
+                                }
+                                for (var j = 0; j < JSON.parse(parsedScoresData[i].problemsZones).length; j++) {
+                                    zones += JSON.parse(parsedScoresData[i].problemsZones)[j];
+                                }
+                                for (var j = 0; j < JSON.parse(parsedScoresData[i].problemsTopped).length; j++) {
+                                    tops += JSON.parse(parsedScoresData[i].problemsTopped)[j];
+                                }
+                                score = tops * 100 + zones * 20;
+                                var hasAddedRow = false;
+                                console.log("table.rows.length: " + table.rows.length);
+                                for (var k = 1; k < table.rows.length; k++) {
+                                    console.log("score > table: " + score + ", " + table.rows[k].cells[table.rows[k].cells.length - 1].innerHTML);
+
+                                    if (score > table.rows[k].cells[table.rows[k].cells.length - 1].innerHTML)
+                                    {
+                                        hasAddedRow = true;
+                                        var row = table.insertRow(k);
+                                        var cell1 = row.insertCell(-1);
+                                        var cell2 = row.insertCell(-1);
+                                        cell2.innerHTML =  parsedUsersData[i].firstName + " " + parsedUsersData[i].lastName;
+                                        
+                                        console.log("JSON.parse(parsedScoresData[i].problemsTries): " + parsedScoresData[i].problemsTries);
+                                        
+                                        var cell3 = row.insertCell(-1);
+                                        cell3.innerHTML = tops;
+
+                                        if (compData[0].hasZones == true) {
+                                            var cell4 = row.insertCell(-1);
+                                            cell4.innerHTML = zones;
+
+                                        }
+                                        var cell5 = row.insertCell(-1);
+                                        cell5.innerHTML = tries;
+                                        var cell6 = row.insertCell(-1);
+                                        cell6.innerHTML = score;
+                                        break;
+                                    }
+                                }
+                                if (hasAddedRow == false)
+                                {
+                                    var row = table.insertRow(-1);
+                                    var cell1 = row.insertCell(-1);
+                                    var cell2 = row.insertCell(-1);
+                                    cell2.innerHTML =  parsedUsersData[i].firstName + " " + parsedUsersData[i].lastName;
+                                    
+                                    console.log("JSON.parse(parsedScoresData[i].problemsTries): " + parsedScoresData[i].problemsTries);
+                                    
+                                    var cell3 = row.insertCell(-1);
+                                    cell3.innerHTML = tops;
+
+                                    if (compData[0].hasZones == true) {
+                                        var cell4 = row.insertCell(-1);
+                                        cell4.innerHTML = zones;
+
+                                    }
+                                    var cell5 = row.insertCell(-1);
+                                    cell5.innerHTML = tries;
+                                    var cell6 = row.insertCell(-1);
+                                    cell6.innerHTML = score;
+                                }
+                            }
+
+                            for (var i = 1; i < table.rows.length; i++) {
+                                table.rows[i].cells[0].innerHTML = i;
+                            }
+
+
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                            console.log("Error");
+                            document.getElementById("enterCompetitionButton").style.display = "none";
+            
+                        }
+                    });
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                    document.getElementById("leaveCompetitionButton").style.display = "none";
+                        console.log("error none: " + errorThrown);
+                }
+            });
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) { 
             console.log("errorerrorerrorerror");
@@ -781,9 +869,6 @@ function refreshCompetitionInformation(CompetitionName)
 
         }
     });
-
-
-
 }
 
 function leaveCompetitionButton() {
@@ -843,6 +928,7 @@ function testFunction() {
 }
 
 function enterCompetitionButton() {
+    console.log("localStorage.CompetitionInformation: " + localStorage.CompetitionInformation);
     var currentCompInfo = JSON.parse(localStorage.CompetitionInformation);
     var problemsTries = [];
     var problemsZones = [];
@@ -851,17 +937,12 @@ function enterCompetitionButton() {
     for (var i = 0; i < currentCompInfo.numberOfProblems; i++) {
         problemsTries.push(0);
         problemsTopped.push(0);
-    }
-
-
-
-    for (var i = 0; i < currentCompInfo.numberOfProblems; i++) {
-        var innerArray = [];
-        for (var j = 0; j < currentCompInfo.numberOfZones; j++) {
-            innerArray.push(0);
+        if (currentCompInfo.hasZones > 0) {
+            problemsZones.push(0);
         }
-        problemsZones.push(innerArray);
     }
+
+
 
 
     updateScore(currentCompInfo.competitionName, localStorage.myUserID, problemsTries, problemsZones, problemsTopped);
@@ -875,7 +956,7 @@ function updateScore(scores_competitionName, usersIDParameter, problemsTries, pr
     var urlVar = "https://bljo2x1b0h.execute-api.eu-west-2.amazonaws.com/IncrementOne/scores?scores_competitionName=" + scores_competitionName 
     + "&usersIDParameter=" + usersIDParameter + "&problemsTries=" + JSON.stringify(problemsTries) + "&problemsZones=" + JSON.stringify(problemsZones)
     + "&problemsTopped=" + JSON.stringify(problemsTopped);
-
+    console.log("urlVar: " + urlVar);
     $.ajax({
         type: "PUT",
         url: urlVar,

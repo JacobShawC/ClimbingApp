@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html lang="en">
 	<head>
@@ -62,7 +62,7 @@ padding: 0px;
 			</script>
 
 			<br>
-			<ul class="nav nav-tabs  nav-fill w-100" role="tablist">
+			<ul class="nav nav-tabs  nav-fill w-100" role="tablist" id="competitionTabs">
 					<li class="nav-item">
 						<a class="nav-link active" data-toggle="tab" href="#entered">Entered</a>
 					</li>
@@ -112,6 +112,9 @@ padding: 0px;
 		</div>
 
 	<script>
+        if (window.location.hash === "#created") {
+            $('#competitionTabs a[href="#created"]').tab('show');
+        }
 
 		enteredCompetitionsRefresh();
 		organisedCompetitionsRefresh();
