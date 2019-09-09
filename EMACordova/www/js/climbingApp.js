@@ -598,16 +598,17 @@ function confirmScores()
             else{
                 Zones.push(parseInt(rows[i].cells[columnCount -2].children[0].checked*1));
             }
-            if (parseInt(rows[i].cells[1].children[0].value) == 0 && (hasTopped || hasZone)) {
-                Tries.push(1);
-            }
-            else{
-                Tries.push(parseInt(rows[i].cells[1].children[0].value));
-            }
-
+            
         }
+        if (parseInt(rows[i].cells[1].children[0].value) == 0 && (hasTopped || hasZone)) {
+            Tries.push(1);
+        }
+        else{
+            Tries.push(parseInt(rows[i].cells[1].children[0].value));
+        }
+
     }
-    console.log(" Tries: " + Tries + " Zones: " + Zones + " Topped: " + Topped);
+    
 
     updateScore(localStorage.selectedCompetitionName, localStorage.myUserID, Tries, Zones, Topped);
 
@@ -720,8 +721,11 @@ function refreshCompetitionInformation(CompetitionName)
                         success: function(usersData, status) {
                             console.log("usersData: " + usersData);
 
-                            
-                            var parsedUsersData = JSON.parse(usersData);
+                            var parsedUsersData;
+                            if (usersData)
+                            {
+                                parsedUsersData = JSON.parse(usersData);
+                            }
                             console.log("scoresData: " + scoresData);
                             console.log("usersData: " + usersData);
 
@@ -749,7 +753,10 @@ function refreshCompetitionInformation(CompetitionName)
                                 document.getElementById("enterCompetitionButton").style.display = "block";
                                 document.getElementById("leaveCompetitionButton").style.display = "none";
                                 document.getElementById("enterScoreButton").style.display = "none";
-
+                                if (!usersData)
+                                {
+                                    return;
+                                }
                             }
 
                             for (var i = 0; i < parsedUsersData.length; i++) {
@@ -766,6 +773,8 @@ function refreshCompetitionInformation(CompetitionName)
                                 for (var j = 0; j < JSON.parse(parsedScoresData[i].problemsTopped).length; j++) {
                                     tops += JSON.parse(parsedScoresData[i].problemsTopped)[j];
                                 }
+                                console.log("tries zones tops score: " + tries + ", " + zones + ", " + tops + ", " + score);
+
                                 score = tops * 100 + zones * 20;
                                 var hasAddedRow = false;
                                 console.log("table.rows.length: " + table.rows.length);
@@ -783,7 +792,7 @@ function refreshCompetitionInformation(CompetitionName)
                                         console.log("JSON.parse(parsedScoresData[i].problemsTries): " + parsedScoresData[i].problemsTries);
                                         
                                         var cell3 = row.insertCell(-1);
-                                        cell3.innerHTML = tops;
+                                        cell3.innerHTML = tries;
 
                                         if (compData[0].hasZones == true) {
                                             var cell4 = row.insertCell(-1);
@@ -791,7 +800,7 @@ function refreshCompetitionInformation(CompetitionName)
 
                                         }
                                         var cell5 = row.insertCell(-1);
-                                        cell5.innerHTML = tries;
+                                        cell5.innerHTML = tops;
                                         var cell6 = row.insertCell(-1);
                                         cell6.innerHTML = score;
                                         break;
@@ -807,7 +816,7 @@ function refreshCompetitionInformation(CompetitionName)
                                     console.log("JSON.parse(parsedScoresData[i].problemsTries): " + parsedScoresData[i].problemsTries);
                                     
                                     var cell3 = row.insertCell(-1);
-                                    cell3.innerHTML = tops;
+                                    cell3.innerHTML = tries;
 
                                     if (compData[0].hasZones == true) {
                                         var cell4 = row.insertCell(-1);
@@ -815,7 +824,7 @@ function refreshCompetitionInformation(CompetitionName)
 
                                     }
                                     var cell5 = row.insertCell(-1);
-                                    cell5.innerHTML = tries;
+                                    cell5.innerHTML = tops;
                                     var cell6 = row.insertCell(-1);
                                     cell6.innerHTML = score;
                                 }
