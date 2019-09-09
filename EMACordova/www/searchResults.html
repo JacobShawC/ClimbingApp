@@ -5,7 +5,8 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<!-- Javascript SDK-->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="js/amazon-cognito-auth.min.js"></script>
 		<script src="js/climbingApp.js"></script>
 		<script src="js/jquery-3.4.1.min.js"></script>
 		<script src="js/amazon-cognito-auth.min.js"></script>
@@ -17,24 +18,22 @@
 		<link rel="stylesheet" href="css/bootstrap.min.css">
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<script>addStyle()</script>
-
-		<style>
-			div.searchResults {
-				background-color: lightblue;
-				width: 400px;
-				height: 400px;
-				overflow: scroll;
+		<style type="text/css">
+				
+	
+			.tab-content {
+				border-bottom: 1px solid #ddd;
+				margin-left:-25px !important;
+				margin-right:-25px !important;
 			}
-			table, td {
-				border: 1px solid black;
-			}
-
-		</style>
+			</style>
+		
 	</head>
 	<body>
 		<div id="mainContainer" class="container">
-
-		</div>
+				<script>
+					addHeaderHTML();
+				</script>
 		<div id="OrderDetails">Search:</div>
 		<input type="text" id="searchTextInput"><br>
 
@@ -42,31 +41,24 @@
 
 
 
-		<div class="searchResults">
-				<table id="searchResultsTable", style="width:100%">
+		<div class="scrollbar scrollbar-black bordered-black square thin">
+			<table  id="searchResultsTable" class="table-sm table-bordered tableFixHead table-hover">
+				<thead>
 					<tr>
-						<td>Name</td>
-						<td>Location</td>
-						<td>End Date</td>
-						<td>Select</td>
-			
+						<th scope="col">Name</th>
+						<th scope="col">Location</th>
+						<th scope="col">End Date</th>
 					</tr>
-					
-				</table>
+				</thead>
+				<tbody>
+					<tr>
 
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</body>
  <script>
-	addHeaderHTML();
-
-	var link = document.querySelector('link[rel="import"]');
-
-	// Clone the <template> in the import.
-	var template = link.import.querySelector('template');
-	var clone = document.importNode(template.content, true);
-
-	document.querySelector('#container').appendChild(clone);
-
 	$('#searchTextInput').keypress(function(event){
 
 		var keycode = (event.keyCode ? event.keyCode : event.which);
@@ -76,6 +68,5 @@
 
 		}
 	});
-	searchResultsRefresh();
 	</script>
 </html>

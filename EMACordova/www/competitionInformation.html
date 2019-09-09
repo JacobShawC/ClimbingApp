@@ -2,36 +2,39 @@
 
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-	<!-- Javascript SDK-->
-	<script src="js/amazon-cognito-auth.min.js"></script>
-	<script src="js/climbingApp.js"></script>
-	<script src="js/jquery-3.4.1.min.js"></script>
-    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
-    <script src="js/amazon-cognito-identity.min.js"></script>
-    <script src="js/config.js"></script>
-	<script src="js/popper.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<script>addStyle()</script>
-  
-	<style>
-	div.competitionInformation {
-		background-color: lightblue;
-		width: 300px;
-		height: 300px;
-		overflow: scroll;
-	}
-	</style>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="js/amazon-cognito-auth.min.js"></script>
+		<script src="js/climbingApp.js"></script>
+		<script src="js/jquery-3.4.1.min.js"></script>
+		<script src="js/amazon-cognito-auth.min.js"></script>
+		<script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
+		<script src="js/amazon-cognito-identity.min.js"></script>
+		<script src="js/config.js"></script>
+		<script src="js/popper.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<script>addStyle()</script>
+	<style type="text/css">
+			
+
+		.tab-content {
+			border-bottom: 1px solid #ddd;
+			margin-left:-25px !important;
+			margin-right:-25px !important;
+		}
+		</style>
 	</head>
 	<body>
 		<div id="mainContainer" class="container">
+			<script>
+				addHeaderHTML();
+			</script>
 			<h1 class="h3 mb-3 font-weight-normal" id="titleheader"></h1>
 
 			<p id="competitionDescription"></p>
 		
-			<table id="o9 ", style="width:100%"></table>
 		
 			
 			<p id="competitionLocation"></p>
@@ -67,17 +70,13 @@
 				</table>
 			</div>
 			
-
-		
-			
 		</div>
 
+
 	
-	
- </body>
+	</body>
 
 	<script>
-		addHeaderHTML();
 
 		document.getElementById("enterScoreButton").style.display = "none";
 		document.getElementById("enterCompetitionButton").style.display = "none";

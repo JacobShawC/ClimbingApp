@@ -297,7 +297,7 @@ function confirmCreateCompetitionButton() {
 }
 
 function searchButton() {
-    console.log("test");
+    var table = document.getElementById("searchResultsTable");
 
     delete localStorage.searchResult;
 
@@ -312,23 +312,38 @@ function searchButton() {
         },
         contentType: "application/json",
         dataType: "json",
-        success: function(data, status) {
+        success: function(searchData, status) {
             console.log("test2");
             //console.log(data);
             console.log(status);
 
-            if (data != null && data != undefined)
+            if (searchData != null && searchData != undefined)
             {
-                localStorage.searchResult = JSON.stringify(data);
-                console.log("ajax: " + localStorage.searchResult);
-                if(!document.URL.includes("searchResults.html")){
-                    window.location.href = 'searchResults.html';
-                }
-                else
+                console.log(JSON.stringify(searchData));
+                for (var i = 2; i < table.rows.length; i++) 
                 {
-                    searchResultsRefresh();
-                }  
+                    table.rows[i].remove();
+                }
+                for (var i = 0; i < searchData.length; i++) 
+                {
+                    var row = table.insertRow(-1);
+                    row.setAttribute('onclick', 'selectCompetition(\'' + searchData[i].competitionName + '\')');
+                    row.setAttribute('style', "cursor: pointer;");
+
+
+                    var cell1 = row.insertCell(-1);
+                    cell1.innerHTML =  searchData[i].competitionName;
+
+                    var cell2 = row.insertCell(-1);
+                    cell2.innerHTML =  searchData[i].location;
+                    var cell3 = row.insertCell(-1);
+                    var date = new Date(searchData[i].endDate);
+                    cell3.innerHTML = getJSDateFromSQL(date);
+                    //cell3.innerHTML = date;
+
+                }
             }
+            table.rows[1].remove();
 
         }
     });
@@ -471,44 +486,6 @@ function organisedCompetitionsRefresh() {
 
         }
     });
-}
-
-function searchResultsRefresh() {
-    if (localStorage.searchResult == undefined)
-    {
-        console.log("searchResultsRefresh undefined");
-        return;
-    }
-
-    var results = JSON.parse(localStorage.searchResult);
-    console.log(results);
-    var table = document.getElementById("searchResultsTable");
-
-    //or use :  var table = document.all.tableid;
-    for(var i = table.rows.length - 1; i > 0; i--)
-    {
-        table.deleteRow(i);
-    }
-
-    if (results != null && results != undefined)
-    {
-        for (var i = 0; i < results.length; i++)
-        {
-            var row = table.insertRow(i + 1);
-
-            var cell1 = row.insertCell(0);
-            var cell2 = row.insertCell(1);
-            var cell3 = row.insertCell(2);
-            var cell4 = row.insertCell(3);
-            cell1.innerHTML = String(results[i].competitionName);
-            cell2.innerHTML = String(results[i].location);
-            cell3.innerHTML = String(results[i].endDate);
-
-           
-
-            cell4.innerHTML =  '<input id="Button" type="button" value="ClickHere" onclick="selectCompetition(\'' + results[i].competitionName + '\')">';
-        }
-    }
 }
 
 function selectCompetition(competitionName)
