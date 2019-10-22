@@ -4,5 +4,5 @@ This is the repository for my Climbing App created as part of my Open Univesity 
 Along side the development of the WebApp, a [detailed report](https://docs.google.com/document/d/1uamDZQuOTYKOEaFLjbP08_cXO5DjEBn4xAHfFiU47V4/edit?usp=sharing)
  on the design, architecture and development of the web app was Created.
 
-ClimbingScores was developed using Amazon Web Services and Javascript.
+ClimbingScores was developed using Amazon Web Services, MySQL and Javascript.
 
